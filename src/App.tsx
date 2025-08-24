@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -17,8 +17,14 @@ import {
   CheckCircle,
   X
 } from '@phosphor-icons/react'
-import { toast } from 'sonner'
+import { toast, Toaster } from 'sonner'
 import { useKV } from '@github/spark/hooks'
+
+interface ContactForm {
+  name: string
+  email: string
+  message: string
+}
 
 interface TeamMember {
   name: string
@@ -98,11 +104,14 @@ const projects: Project[] = [
   }
 ]
 
-function App() {
-  const [activeSection, setActiveSection] = useState('home')
-  const [selectedCategory, setSelectedCategory] = useState('All')
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [contactForm, setContactForm] = useKV('contact-form', {
+function App(): React.JSX.Element {
+  // Initialize state with proper error handling
+  const [activeSection, setActiveSection] = useState<string>('home')
+  const [selectedCategory, setSelectedCategory] = useState<string>('All')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
+  
+  // Initialize contact form with useKV hook
+  const [contactForm, setContactForm] = useKV<ContactForm>('contact-form', {
     name: '',
     email: '',
     message: ''
@@ -111,7 +120,7 @@ function App() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    if (!contactForm.name || !contactForm.email || !contactForm.message) {
+    if (!contactForm?.name || !contactForm?.email || !contactForm?.message) {
       toast.error('Please fill in all fields')
       return
     }
@@ -134,6 +143,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-background">
+      <Toaster position="top-right" richColors />
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-background/95 backdrop-blur-sm border-b border-border z-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -439,8 +449,12 @@ function App() {
                     <div>
                       <Input
                         placeholder="Your Name"
-                        value={contactForm.name}
-                        onChange={(e) => setContactForm(prev => ({ ...prev, name: e.target.value }))}
+                        value={contactForm?.name || ''}
+                        onChange={(e) => setContactForm((prev: ContactForm | undefined) => ({ 
+                          name: e.target.value,
+                          email: prev?.email || '',
+                          message: prev?.message || ''
+                        }))}
                         className="w-full"
                       />
                     </div>
@@ -448,16 +462,24 @@ function App() {
                       <Input
                         type="email"
                         placeholder="Your Email"
-                        value={contactForm.email}
-                        onChange={(e) => setContactForm(prev => ({ ...prev, email: e.target.value }))}
+                        value={contactForm?.email || ''}
+                        onChange={(e) => setContactForm((prev: ContactForm | undefined) => ({ 
+                          name: prev?.name || '',
+                          email: e.target.value,
+                          message: prev?.message || ''
+                        }))}
                         className="w-full"
                       />
                     </div>
                     <div>
                       <Textarea
                         placeholder="Tell us about your project..."
-                        value={contactForm.message}
-                        onChange={(e) => setContactForm(prev => ({ ...prev, message: e.target.value }))}
+                        value={contactForm?.message || ''}
+                        onChange={(e) => setContactForm((prev: ContactForm | undefined) => ({ 
+                          name: prev?.name || '',
+                          email: prev?.email || '',
+                          message: e.target.value
+                        }))}
                         className="w-full min-h-32"
                       />
                     </div>

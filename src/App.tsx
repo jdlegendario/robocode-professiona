@@ -8,12 +8,13 @@ import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Separator } from '@/components/ui/separator'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { 
   Code, 
   Users, 
   Briefcase, 
-  Mail, 
-  Github, 
+  Envelope, 
+  GithubLogo, 
   LinkedinLogo, 
   ArrowRight,
   CheckCircle,
@@ -24,7 +25,8 @@ import {
   Calendar,
   Eye,
   MapPin,
-  Gear
+  Gear,
+  ArrowSquareOut
 } from '@phosphor-icons/react'
 import { toast, Toaster } from 'sonner'
 import { useKV } from '@github/spark/hooks'
@@ -65,6 +67,10 @@ interface Project {
   description: string
   technologies: string[]
   link?: string
+  image?: string
+  fullDescription?: string
+  features?: string[]
+  client?: string
 }
 
 const teamMembers: TeamMember[] = [
@@ -111,19 +117,55 @@ const projects: Project[] = [
     title: "Enterprise ERP Customization",
     category: "Odoo",
     description: "Complete Odoo implementation for manufacturing company with custom modules for inventory management and production planning.",
-    technologies: ["Odoo", "Python", "PostgreSQL", "Docker"]
+    fullDescription: "We developed a comprehensive ERP solution for a manufacturing company with over 200 employees. The project included custom modules for advanced inventory management, production planning, and quality control. We also integrated third-party logistics systems and implemented automated reporting dashboards.",
+    technologies: ["Odoo", "Python", "PostgreSQL", "Docker"],
+    image: "/api/placeholder/600/400",
+    client: "Manufacturing Corp",
+    features: [
+      "Custom inventory management module",
+      "Production planning and scheduling",
+      "Quality control workflows",
+      "Third-party logistics integration", 
+      "Automated reporting dashboards",
+      "Multi-location warehouse management"
+    ],
+    link: "https://github.com/robocode-team/odoo-manufacturing"
   },
   {
     title: "Sales Force Automation", 
     category: "Salesforce",
     description: "Custom Salesforce solution with Apex triggers, Lightning components, and third-party integrations for lead management.",
-    technologies: ["Apex", "Lightning", "SOQL", "REST API"]
+    fullDescription: "Built a complete sales automation platform using Salesforce with custom Lightning components, complex Apex triggers, and seamless third-party integrations. The solution increased lead conversion rates by 40% and reduced sales cycle time by 25%.",
+    technologies: ["Apex", "Lightning", "SOQL", "REST API"],
+    image: "/api/placeholder/600/400",
+    client: "SalesForce Inc",
+    features: [
+      "Custom Lightning Web Components",
+      "Advanced Apex trigger framework",
+      "Third-party CRM integration",
+      "Automated lead scoring system",
+      "Custom reporting and analytics",
+      "Mobile-responsive design"
+    ],
+    link: "https://github.com/robocode-team/salesforce-automation"
   },
   {
     title: "Modern Web Portal",
     category: "Web Development", 
     description: "Responsive web application with real-time features, built with React and modern development practices.",
-    technologies: ["React", "TypeScript", "Tailwind CSS", "Node.js"]
+    fullDescription: "Developed a modern, high-performance web portal with real-time collaboration features, advanced authentication, and responsive design. The application serves over 10,000 daily active users with 99.9% uptime.",
+    technologies: ["React", "TypeScript", "Tailwind CSS", "Node.js"],
+    image: "/api/placeholder/600/400",
+    client: "TechCorp Solutions",
+    features: [
+      "Real-time collaboration tools",
+      "Advanced user authentication",
+      "Responsive design for all devices",
+      "Progressive Web App capabilities",
+      "Advanced search and filtering",
+      "Integration with cloud services"
+    ],
+    link: "https://github.com/robocode-team/modern-web-portal"
   }
 ]
 
@@ -168,6 +210,7 @@ function App(): React.JSX.Element {
   const [selectedCategory, setSelectedCategory] = useState<string>('All')
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
   const [selectedBlogPost, setSelectedBlogPost] = useState<BlogPost | null>(null)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [currentLanguage, setCurrentLanguage] = useState<string>(i18n.language)
   const [showAdmin, setShowAdmin] = useState<boolean>(false)
   
@@ -244,49 +287,70 @@ function App(): React.JSX.Element {
     <AuthProvider>
       {showAdmin ? (
         <AdminPanel />
-      ) : (
+        ) : (
     <div className="min-h-screen bg-background">
       <Toaster position="top-right" richColors />
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-background/95 backdrop-blur-sm border-b border-border z-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+      <nav className="fixed top-0 w-full bg-background/98 backdrop-blur-md border-b border-border/50 z-50 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-18">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-3"
             >
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <Code className="w-5 h-5 text-primary-foreground" />
+              <div className="w-10 h-10 bg-gradient-to-br from-primary to-blue-600 rounded-xl flex items-center justify-center shadow-md">
+                <Code className="w-6 h-6 text-white" />
               </div>
-              <span className="text-xl font-bold text-foreground">Robocode</span>
+              <div>
+                <span className="text-2xl font-bold text-foreground">Robocode</span>
+                <div className="text-xs text-muted-foreground font-medium">Professional Development</div>
+              </div>
             </motion.div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              {['home', 'about', 'portfolio', 'blog', 'contact'].map((section) => (
+            <div className="hidden lg:flex items-center space-x-1">
+              {[
+                { key: 'home', label: 'Inicio' },
+                { key: 'about', label: 'Nosotros' },
+                { key: 'portfolio', label: 'Proyectos' },
+                { key: 'blog', label: 'Blog' },
+                { key: 'contact', label: 'Contacto' }
+              ].map((item) => (
                 <button
-                  key={section}
-                  onClick={() => scrollToSection(section)}
-                  className={`text-sm font-medium transition-colors ${
-                    activeSection === section
-                      ? 'text-primary'
-                      : 'text-muted-foreground hover:text-foreground'
+                  key={item.key}
+                  onClick={() => scrollToSection(item.key)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    activeSection === item.key
+                      ? 'bg-primary text-primary-foreground shadow-sm'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                   }`}
                 >
-                  {t(`nav.${section}`)}
+                  {item.label}
                 </button>
               ))}
-              
+            </div>
+
+            {/* Right side actions */}
+            <div className="flex items-center space-x-3">
               {/* Language Toggle */}
               <Button
                 variant="outline"
                 size="sm"
                 onClick={toggleLanguage}
-                className="ml-4"
+                className="hidden md:flex items-center space-x-1"
               >
-                <Globe className="w-4 h-4 mr-2" />
-                {currentLanguage.toUpperCase()}
+                <Globe size={16} />
+                <span>{currentLanguage.toUpperCase()}</span>
+              </Button>
+
+              {/* CTA Button */}
+              <Button
+                onClick={() => scrollToSection('contact')}
+                className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 font-medium"
+                size="sm"
+              >
+                Cotizar Proyecto
               </Button>
 
               {/* Admin Access Button */}
@@ -309,9 +373,11 @@ function App(): React.JSX.Element {
                 variant="outline"
                 size="sm"
                 onClick={toggleLanguage}
+                className="p-2"
               >
-                <Globe className="w-4 h-4" />
+                <Globe size={16} />
               </Button>
+
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="p-2"
@@ -348,46 +414,83 @@ function App(): React.JSX.Element {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="pt-16 min-h-screen flex items-center relative overflow-hidden">
-        {/* Subtle tech background pattern */}
+      <section id="home" className="pt-16 min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-background to-muted/30">
+        {/* Enhanced background pattern */}
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-10 w-32 h-32 border border-primary rounded-full"></div>
-          <div className="absolute top-40 right-20 w-20 h-20 border border-primary rounded-lg rotate-45"></div>
-          <div className="absolute bottom-40 left-1/4 w-16 h-16 border border-primary rounded-full"></div>
-          <div className="absolute bottom-20 right-1/3 w-24 h-24 border border-primary rounded-lg rotate-12"></div>
+          <div className="absolute top-20 left-10 w-32 h-32 border border-primary rounded-full animate-pulse"></div>
+          <div className="absolute top-40 right-20 w-20 h-20 border border-primary rounded-lg rotate-45 animate-pulse delay-300"></div>
+          <div className="absolute bottom-40 left-1/4 w-16 h-16 border border-primary rounded-full animate-pulse delay-700"></div>
+          <div className="absolute bottom-20 right-1/3 w-24 h-24 border border-primary rounded-lg rotate-12 animate-pulse delay-500"></div>
         </div>
         
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
           <div className="text-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="mb-8"
+              className="mb-12"
             >
-              <div className="w-24 h-24 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <div className="w-24 h-24 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg">
                 <Code className="w-12 h-12 text-primary-foreground" />
               </div>
-              <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-4">
-                {t('home.title')}
+              <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight">
+                Soluciones Digitales <br />
+                <span className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+                  Empresariales
+                </span>
               </h1>
-              <p className="text-xl text-muted-foreground mb-2">
-                {t('home.subtitle')}
+              <p className="text-xl md:text-2xl text-muted-foreground mb-4 max-w-4xl mx-auto">
+                Desarrollamos sistemas complejos de software que impulsan el crecimiento empresarial 
+                con tecnologías de vanguardia.
               </p>
             </motion.div>
 
+            {/* Stats Section */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="mb-8"
+              className="mb-10"
             >
-              <p className="text-lg md:text-xl text-foreground mb-6 max-w-3xl mx-auto leading-relaxed">
-                {t('home.description', { 
-                  odoo: t('home.odoo'),
-                  salesforce: t('home.salesforce')
-                })}
-              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary mb-2">50+</div>
+                  <div className="text-sm text-muted-foreground uppercase tracking-wide">Proyectos Exitosos</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary mb-2">5+</div>
+                  <div className="text-sm text-muted-foreground uppercase tracking-wide">Años de Experiencia</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary mb-2">98%</div>
+                  <div className="text-sm text-muted-foreground uppercase tracking-wide">Satisfacción Cliente</div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Technologies badges */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="mb-10"
+            >
+              <p className="text-sm text-muted-foreground uppercase tracking-wide mb-4">Especializados en</p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Badge variant="outline" className="px-4 py-2 text-sm font-medium">
+                  Odoo ERP
+                </Badge>
+                <Badge variant="outline" className="px-4 py-2 text-sm font-medium">
+                  Salesforce CRM
+                </Badge>
+                <Badge variant="outline" className="px-4 py-2 text-sm font-medium">
+                  React & Node.js
+                </Badge>
+                <Badge variant="outline" className="px-4 py-2 text-sm font-medium">
+                  Integrations API
+                </Badge>
+              </div>
             </motion.div>
 
             <motion.div
@@ -398,17 +501,19 @@ function App(): React.JSX.Element {
             >
               <Button 
                 onClick={() => scrollToSection('portfolio')}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all"
+                size="lg"
               >
-                {t('home.viewWork')}
-                <ArrowRight className="ml-2 w-4 h-4" />
+                Ver Nuestros Proyectos
+                <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
               <Button 
                 variant="outline" 
                 onClick={() => scrollToSection('contact')}
-                className="px-8 py-3"
+                className="px-8 py-4 text-lg font-medium border-2 hover:bg-primary hover:text-primary-foreground transition-all"
+                size="lg"
               >
-                {t('home.getInTouch')}
+                Solicitar Cotización
               </Button>
             </motion.div>
           </div>
@@ -478,7 +583,7 @@ function App(): React.JSX.Element {
                         rel="noopener noreferrer"
                         className="p-2 text-muted-foreground hover:text-primary transition-colors"
                       >
-                        <Github size={20} />
+                        <GithubLogo size={20} />
                       </a>
                     </div>
                   </CardContent>
@@ -532,7 +637,7 @@ function App(): React.JSX.Element {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   layout
                 >
-                  <Card className="h-full hover:shadow-lg transition-shadow">
+                  <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer" onClick={() => setSelectedProject(project)}>
                     <CardContent className="p-6">
                       <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                         <Briefcase className="w-6 h-6 text-primary" />
@@ -561,6 +666,87 @@ function App(): React.JSX.Element {
           </div>
         </div>
       </section>
+
+      {/* Project Detail Modal */}
+      <Dialog open={selectedProject !== null} onOpenChange={() => setSelectedProject(null)}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          {selectedProject && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-bold text-foreground">
+                  {selectedProject.title}
+                </DialogTitle>
+              </DialogHeader>
+              
+              <div className="space-y-6">
+                {/* Project Image */}
+                {selectedProject.image && (
+                  <div className="w-full h-64 bg-muted rounded-lg flex items-center justify-center">
+                    <img 
+                      src={selectedProject.image} 
+                      alt={selectedProject.title}
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </div>
+                )}
+                
+                {/* Project Info */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">Cliente</h3>
+                    <p className="text-muted-foreground mb-4">{selectedProject.client || 'Confidencial'}</p>
+                    
+                    <h3 className="text-lg font-semibold mb-2">Categoría</h3>
+                    <Badge variant="outline" className="mb-4">{selectedProject.category}</Badge>
+                    
+                    <h3 className="text-lg font-semibold mb-2">Tecnologías</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedProject.technologies.map((tech) => (
+                        <Badge key={tech} variant="secondary" className="text-xs">
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">Descripción</h3>
+                    <p className="text-muted-foreground mb-4">
+                      {selectedProject.fullDescription || selectedProject.description}
+                    </p>
+                    
+                    {selectedProject.link && (
+                      <Button 
+                        variant="outline" 
+                        className="w-full"
+                        onClick={() => window.open(selectedProject.link, '_blank')}
+                      >
+                        <ArrowSquareOut size={16} className="mr-2" />
+                        Ver Proyecto
+                      </Button>
+                    )}
+                  </div>
+                </div>
+                
+                {/* Project Features */}
+                {selectedProject.features && selectedProject.features.length > 0 && (
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4">Características Principales</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {selectedProject.features.map((feature, index) => (
+                        <div key={index} className="flex items-center space-x-2">
+                          <CheckCircle size={16} className="text-green-500 flex-shrink-0" />
+                          <span className="text-sm text-muted-foreground">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* Blog Section */}
       <section id="blog" className="py-20 bg-muted/50">
@@ -776,7 +962,7 @@ function App(): React.JSX.Element {
                 </h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
-                    <Mail className="w-5 h-5 text-primary" />
+                    <Envelope className="w-5 h-5 text-primary" />
                     <span className="text-muted-foreground">{t('contact.info.email')}</span>
                   </div>
                   <div className="flex items-center space-x-3">
@@ -846,7 +1032,7 @@ function App(): React.JSX.Element {
                     rel="noopener noreferrer"
                     className="text-background/70 hover:text-background transition-colors"
                   >
-                    <Github size={20} />
+                    <GithubLogo size={20} />
                   </a>
                 </div>
               ))}

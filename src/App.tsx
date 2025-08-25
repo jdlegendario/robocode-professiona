@@ -23,10 +23,14 @@ import {
   Article,
   Calendar,
   Eye,
-  MapPin
+  MapPin,
+  Gear
 } from '@phosphor-icons/react'
 import { toast, Toaster } from 'sonner'
 import { useKV } from '@github/spark/hooks'
+import { AuthProvider } from '@/contexts/AuthContext'
+import AdminPanel from '@/admin'
+import { contactAPI } from '@/api'
 
 interface BlogPost {
   id: string
@@ -165,6 +169,7 @@ function App(): React.JSX.Element {
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
   const [selectedBlogPost, setSelectedBlogPost] = useState<BlogPost | null>(null)
   const [currentLanguage, setCurrentLanguage] = useState<string>(i18n.language)
+  const [showAdmin, setShowAdmin] = useState<boolean>(false)
   
   // Initialize contact form with useKV hook
   const [contactForm, setContactForm] = useKV<ContactForm>('contact-form', {
@@ -176,6 +181,14 @@ function App(): React.JSX.Element {
   useEffect(() => {
     setCurrentLanguage(i18n.language)
   }, [i18n.language])
+
+  // Check for admin route
+  useEffect(() => {
+    const path = window.location.pathname
+    if (path === '/admin' || path.startsWith('/admin/')) {
+      setShowAdmin(true)
+    }
+  }, [])
 
   const toggleLanguage = () => {
     const newLang = currentLanguage === 'en' ? 'es' : 'en'
@@ -191,8 +204,19 @@ function App(): React.JSX.Element {
       return
     }
 
-    toast.success(t('messages.success'))
-    setContactForm({ name: '', email: '', message: '' })
+    try {
+      await contactAPI.send({
+        name: contactForm.name,
+        email: contactForm.email,
+        message: contactForm.message
+      })
+      
+      toast.success(t('messages.success'))
+      setContactForm({ name: '', email: '', message: '' })
+    } catch (error) {
+      console.error('Contact form error:', error)
+      toast.error('There was an error sending your message. Please try again.')
+    }
   }
 
   const scrollToSection = (sectionId: string) => {
@@ -217,6 +241,10 @@ function App(): React.JSX.Element {
   }
 
   return (
+    <AuthProvider>
+      {showAdmin ? (
+        <AdminPanel />
+      ) : (
     <div className="min-h-screen bg-background">
       <Toaster position="top-right" richColors />
       {/* Navigation */}
@@ -259,6 +287,19 @@ function App(): React.JSX.Element {
               >
                 <Globe className="w-4 h-4 mr-2" />
                 {currentLanguage.toUpperCase()}
+              </Button>
+
+              {/* Admin Access Button */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  window.location.pathname = '/admin'
+                  setShowAdmin(true)
+                }}
+                className="text-xs opacity-50 hover:opacity-100"
+              >
+                <Gear className="w-3 h-3" />
               </Button>
             </div>
 
@@ -814,6 +855,8 @@ function App(): React.JSX.Element {
         </div>
       </footer>
     </div>
+      )}
+    </AuthProvider>
   )
 }
 

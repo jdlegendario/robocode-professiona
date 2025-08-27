@@ -336,11 +336,11 @@ function App(): React.JSX.Element {
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-1">
               {[
-                { key: 'home', label: 'Inicio' },
-                { key: 'about', label: 'Nosotros' },
-                { key: 'portfolio', label: 'Proyectos' },
-                { key: 'blog', label: 'Blog' },
-                { key: 'contact', label: 'Contacto' }
+                { key: 'home', label: t('nav.home') },
+                { key: 'about', label: t('nav.about') },
+                { key: 'portfolio', label: t('nav.portfolio') },
+                { key: 'blog', label: t('nav.blog') },
+                { key: 'contact', label: t('nav.contact') }
               ].map((item) => (
                 <button
                   key={item.key}
@@ -387,7 +387,7 @@ function App(): React.JSX.Element {
                 }`}
                 size="sm"
               >
-                Cotizar Proyecto
+                {t('nav.quoteProject')}
               </Button>
 
               {/* Admin Access Button */}
@@ -485,14 +485,13 @@ function App(): React.JSX.Element {
                 <Code className="w-12 h-12 text-white" />
               </div>
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-                Soluciones Digitales <br />
+                {t('home.heroTitle')} <br />
                 <span className="bg-gradient-to-r from-cyan-400 to-blue-300 bg-clip-text text-transparent">
-                  Empresariales
+                  {t('home.heroSubtitle')}
                 </span>
               </h1>
               <p className="text-xl md:text-2xl text-white/90 mb-4 max-w-4xl mx-auto">
-                Desarrollamos sistemas complejos de software que impulsan el crecimiento empresarial 
-                con tecnologías de vanguardia.
+                {t('home.description')}
               </p>
             </motion.div>
 
@@ -506,15 +505,15 @@ function App(): React.JSX.Element {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-cyan-400 mb-2">50+</div>
-                  <div className="text-sm text-white/70 uppercase tracking-wide">Proyectos Exitosos</div>
+                  <div className="text-sm text-white/70 uppercase tracking-wide">{t('home.stats.projects')}</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-cyan-400 mb-2">5+</div>
-                  <div className="text-sm text-white/70 uppercase tracking-wide">Años de Experiencia</div>
+                  <div className="text-sm text-white/70 uppercase tracking-wide">{t('home.stats.experience')}</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-cyan-400 mb-2">98%</div>
-                  <div className="text-sm text-white/70 uppercase tracking-wide">Satisfacción Cliente</div>
+                  <div className="text-sm text-white/70 uppercase tracking-wide">{t('home.stats.satisfaction')}</div>
                 </div>
               </div>
             </motion.div>
@@ -526,19 +525,19 @@ function App(): React.JSX.Element {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="mb-10"
             >
-              <p className="text-sm text-white/70 uppercase tracking-wide mb-4">Especializados en</p>
+              <p className="text-sm text-white/70 uppercase tracking-wide mb-4">{t('home.specializedIn')}</p>
               <div className="flex flex-wrap justify-center gap-3">
                 <Badge variant="outline" className="px-4 py-2 text-sm font-medium border-white/30 text-white hover:bg-white/10">
-                  Odoo ERP
+                  {t('home.technologies.odooErp')}
                 </Badge>
                 <Badge variant="outline" className="px-4 py-2 text-sm font-medium border-white/30 text-white hover:bg-white/10">
-                  Salesforce CRM
+                  {t('home.technologies.salesforceCrm')}
                 </Badge>
                 <Badge variant="outline" className="px-4 py-2 text-sm font-medium border-white/30 text-white hover:bg-white/10">
-                  React & Node.js
+                  {t('home.technologies.reactNode')}
                 </Badge>
                 <Badge variant="outline" className="px-4 py-2 text-sm font-medium border-white/30 text-white hover:bg-white/10">
-                  Integrations API
+                  {t('home.technologies.integrationsApi')}
                 </Badge>
               </div>
             </motion.div>
@@ -554,7 +553,7 @@ function App(): React.JSX.Element {
                 className="bg-white text-blue-700 hover:bg-gray-100 px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all"
                 size="lg"
               >
-                Ver Nuestros Proyectos
+                {t('home.viewWork')}
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
               <Button 
@@ -563,7 +562,7 @@ function App(): React.JSX.Element {
                 className="px-8 py-4 text-lg font-medium border-2 border-white/30 text-white hover:bg-white/10 hover:border-white transition-all backdrop-blur-sm"
                 size="lg"
               >
-                Solicitar Cotización
+                {t('home.getQuote')}
               </Button>
             </motion.div>
           </div>
@@ -737,46 +736,38 @@ function App(): React.JSX.Element {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Nuestros <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Servicios</span> Especializados
+              {t('services.title')} <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{t('services.subtitle')}</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Soluciones tecnológicas integrales que impulsan la transformación digital de tu empresa
+              {t('services.description')}
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {[
               {
-                title: "Desarrollo Odoo ERP",
-                description: "Implementación y personalización completa de sistemas ERP empresariales",
-                features: ["Módulos Personalizados", "Migración de Datos", "Integración APIs", "Capacitación"],
+                key: 'odooErp',
                 icon: Gear,
                 gradient: "from-green-400 to-emerald-500",
                 bgGradient: "from-green-50 to-emerald-50",
                 technologies: ["Python", "PostgreSQL", "JavaScript", "XML"]
               },
               {
-                title: "Soluciones Salesforce",
-                description: "Desarrollo avanzado en el ecosistema Salesforce para automatización de ventas",
-                features: ["Apex Development", "Lightning Components", "Flow Automation", "Einstein AI"],
+                key: 'salesforce',
                 icon: Briefcase,
                 gradient: "from-blue-400 to-cyan-500",
                 bgGradient: "from-blue-50 to-cyan-50",
                 technologies: ["Apex", "SOQL", "Lightning", "Visualforce"]
               },
               {
-                title: "Desarrollo Web Moderno",
-                description: "Aplicaciones web escalables con tecnologías de última generación",
-                features: ["React Applications", "API Development", "Cloud Deployment", "Mobile Responsive"],
+                key: 'webDev',
                 icon: Code,
                 gradient: "from-purple-400 to-indigo-500",
                 bgGradient: "from-purple-50 to-indigo-50",
                 technologies: ["React", "Node.js", "TypeScript", "AWS"]
               },
               {
-                title: "Consultoría Digital",
-                description: "Asesoramiento estratégico para modernización y optimización tecnológica",
-                features: ["Arquitectura de Software", "Code Review", "Performance Optimization", "Security Audit"],
+                key: 'consulting',
                 icon: Users,
                 gradient: "from-orange-400 to-red-500",
                 bgGradient: "from-orange-50 to-red-50",
@@ -784,7 +775,7 @@ function App(): React.JSX.Element {
               }
             ].map((service, index) => (
               <motion.div
-                key={service.title}
+                key={service.key}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.15 }}
@@ -828,10 +819,10 @@ function App(): React.JSX.Element {
 
                   <CardHeader className="pt-10 pb-4">
                     <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      {service.title}
+                      {t(`services.items.${service.key}.title`)}
                     </h3>
                     <p className="text-gray-600 text-sm leading-relaxed">
-                      {service.description}
+                      {t(`services.items.${service.key}.description`)}
                     </p>
                   </CardHeader>
                   
@@ -839,12 +830,12 @@ function App(): React.JSX.Element {
                     <div className="space-y-4">
                       {/* Features List */}
                       <div>
-                        <h4 className="font-semibold text-gray-800 mb-3 text-sm">Características principales:</h4>
+                        <h4 className="font-semibold text-gray-800 mb-3 text-sm">{t('services.mainFeatures')}</h4>
                         <div className="grid grid-cols-1 gap-2">
-                          {service.features.map((feature) => (
-                            <div key={feature} className="flex items-center text-sm text-gray-600">
+                          {Object.keys(t(`services.items.${service.key}.features`, { returnObjects: true }) as object).map((featureKey) => (
+                            <div key={featureKey} className="flex items-center text-sm text-gray-600">
                               <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
-                              {feature}
+                              {t(`services.items.${service.key}.features.${featureKey}`)}
                             </div>
                           ))}
                         </div>
@@ -852,7 +843,7 @@ function App(): React.JSX.Element {
                       
                       {/* Technology Badges */}
                       <div>
-                        <h4 className="font-semibold text-gray-800 mb-3 text-sm">Stack tecnológico:</h4>
+                        <h4 className="font-semibold text-gray-800 mb-3 text-sm">{t('services.techStack')}</h4>
                         <div className="flex flex-wrap gap-2">
                           {service.technologies.map((tech) => (
                             <Badge 
@@ -869,7 +860,7 @@ function App(): React.JSX.Element {
                         className="w-full mt-4 group-hover:shadow-lg transition-all bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white border-0" 
                         size="sm"
                       >
-                        Saber Más
+                        {t('services.learnMore')}
                         <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                       </Button>
                     </div>

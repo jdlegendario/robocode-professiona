@@ -10,16 +10,31 @@ const resources = {
         about: "About",
         portfolio: "Portfolio", 
         blog: "Blog",
-        contact: "Contact"
+        contact: "Contact",
+        quoteProject: "Quote Project"
       },
       home: {
         title: "Robocode",
         subtitle: "The Robocoders",
-        description: "Professional development team specializing in {{odoo}}, {{salesforce}}, and modern web technologies. Based in Ecuador, delivering enterprise solutions worldwide.",
+        description: "Developing complex software systems that drive business growth with cutting-edge technologies.",
+        heroTitle: "Enterprise Digital",
+        heroSubtitle: "Solutions",
         odoo: "Odoo",
-        salesforce: "Salesforce",
-        viewWork: "View Our Work",
-        getInTouch: "Get in Touch"
+        salesforce: "Salesforce", 
+        viewWork: "View Our Projects",
+        getQuote: "Request Quote",
+        specializedIn: "Specialized in",
+        stats: {
+          projects: "Successful Projects",
+          experience: "Years Experience", 
+          satisfaction: "Client Satisfaction"
+        },
+        technologies: {
+          odooErp: "Odoo ERP",
+          salesforceCrm: "Salesforce CRM",
+          reactNode: "React & Node.js",
+          integrationsApi: "Integrations API"
+        }
       },
       about: {
         title: "Meet Our Team",
@@ -66,6 +81,56 @@ const resources = {
           }
         }
       },
+      services: {
+        title: "Our Specialized",
+        subtitle: "Services",
+        description: "Comprehensive technology solutions that drive your company's digital transformation",
+        items: {
+          odooErp: {
+            title: "Odoo ERP Development",
+            description: "Complete implementation and customization of enterprise ERP systems",
+            features: {
+              customModules: "Custom Modules",
+              dataMigration: "Data Migration",
+              apiIntegration: "API Integration", 
+              training: "Training"
+            }
+          },
+          salesforce: {
+            title: "Salesforce Solutions",
+            description: "Advanced development in the Salesforce ecosystem for sales automation",
+            features: {
+              apexDev: "Apex Development",
+              lightningComponents: "Lightning Components", 
+              flowAutomation: "Flow Automation",
+              einsteinAi: "Einstein AI"
+            }
+          },
+          webDev: {
+            title: "Modern Web Development",
+            description: "Scalable web applications with cutting-edge technologies",
+            features: {
+              reactApps: "React Applications",
+              apiDev: "API Development",
+              cloudDeploy: "Cloud Deployment",
+              mobileResponsive: "Mobile Responsive"
+            }
+          },
+          consulting: {
+            title: "Digital Consulting",
+            description: "Strategic advisory for technological modernization and optimization",
+            features: {
+              softwareArch: "Software Architecture",
+              codeReview: "Code Review",
+              perfOptimization: "Performance Optimization", 
+              securityAudit: "Security Audit"
+            }
+          }
+        },
+        learnMore: "Learn More",
+        mainFeatures: "Main Features:",
+        techStack: "Tech Stack:"
+      },
       footer: {
         subtitle: "Professional Development Team • Ecuador"
       },
@@ -84,16 +149,31 @@ const resources = {
         about: "Nosotros", 
         portfolio: "Portafolio",
         blog: "Blog",
-        contact: "Contacto"
+        contact: "Contacto",
+        quoteProject: "Cotizar Proyecto"
       },
       home: {
         title: "Robocode",
         subtitle: "Los Robocoders",
-        description: "Equipo de desarrollo profesional especializado en {{odoo}}, {{salesforce}} y tecnologías web modernas. Con sede en Ecuador, entregamos soluciones empresariales a nivel mundial.",
+        description: "Desarrollamos sistemas complejos de software que impulsan el crecimiento empresarial con tecnologías de vanguardia.",
+        heroTitle: "Soluciones Digitales",
+        heroSubtitle: "Empresariales",
         odoo: "Odoo",
         salesforce: "Salesforce",
-        viewWork: "Ver Nuestro Trabajo",
-        getInTouch: "Contáctanos"
+        viewWork: "Ver Nuestros Proyectos",
+        getQuote: "Solicitar Cotización",
+        specializedIn: "Especializados en",
+        stats: {
+          projects: "Proyectos Exitosos",
+          experience: "Años de Experiencia",
+          satisfaction: "Satisfacción Cliente"
+        },
+        technologies: {
+          odooErp: "Odoo ERP",
+          salesforceCrm: "Salesforce CRM", 
+          reactNode: "React & Node.js",
+          integrationsApi: "Integrations API"
+        }
       },
       about: {
         title: "Conoce Nuestro Equipo",
@@ -139,6 +219,56 @@ const resources = {
             enterprise: "Soluciones Empresariales y Consultoría"
           }
         }
+      },
+      services: {
+        title: "Nuestros",
+        subtitle: "Servicios Especializados",
+        description: "Soluciones tecnológicas integrales que impulsan la transformación digital de tu empresa",
+        items: {
+          odooErp: {
+            title: "Desarrollo Odoo ERP",
+            description: "Implementación y personalización completa de sistemas ERP empresariales",
+            features: {
+              customModules: "Módulos Personalizados",
+              dataMigration: "Migración de Datos",
+              apiIntegration: "Integración APIs",
+              training: "Capacitación"
+            }
+          },
+          salesforce: {
+            title: "Soluciones Salesforce",
+            description: "Desarrollo avanzado en el ecosistema Salesforce para automatización de ventas",
+            features: {
+              apexDev: "Apex Development",
+              lightningComponents: "Lightning Components",
+              flowAutomation: "Flow Automation", 
+              einsteinAi: "Einstein AI"
+            }
+          },
+          webDev: {
+            title: "Desarrollo Web Moderno",
+            description: "Aplicaciones web escalables con tecnologías de última generación",
+            features: {
+              reactApps: "React Applications",
+              apiDev: "API Development",
+              cloudDeploy: "Cloud Deployment",
+              mobileResponsive: "Mobile Responsive"
+            }
+          },
+          consulting: {
+            title: "Consultoría Digital",
+            description: "Asesoramiento estratégico para modernización y optimización tecnológica",
+            features: {
+              softwareArch: "Arquitectura de Software",
+              codeReview: "Code Review",
+              perfOptimization: "Performance Optimization",
+              securityAudit: "Security Audit"
+            }
+          }
+        },
+        learnMore: "Saber Más",
+        mainFeatures: "Características principales:",
+        techStack: "Stack tecnológico:"
       },
       footer: {
         subtitle: "Equipo de Desarrollo Profesional • Ecuador"

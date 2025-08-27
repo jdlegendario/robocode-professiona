@@ -213,6 +213,7 @@ function App(): React.JSX.Element {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [currentLanguage, setCurrentLanguage] = useState<string>(i18n.language)
   const [showAdmin, setShowAdmin] = useState<boolean>(false)
+  const [scrolled, setScrolled] = useState<boolean>(false)
   
   // Initialize contact form with useKV hook
   const [contactForm, setContactForm] = useKV<ContactForm>('contact-form', {
@@ -224,6 +225,18 @@ function App(): React.JSX.Element {
   useEffect(() => {   
     setCurrentLanguage(i18n.language)
   }, [i18n.language])
+
+  // Scroll effect for navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY
+      const heroHeight = window.innerHeight - 100 // Hero section height minus navbar
+      setScrolled(scrollPosition > heroHeight)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   // Check for admin route
   useEffect(() => {
@@ -291,7 +304,11 @@ function App(): React.JSX.Element {
     <div className="min-h-screen bg-background">
       <Toaster position="top-right" richColors />
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-background/98 backdrop-blur-md border-b border-border/50 z-50 shadow-sm">
+      <nav className={`fixed top-0 w-full backdrop-blur-md z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-white/95 shadow-lg border-b border-gray-200/50' 
+          : 'bg-transparent'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-18">
             <motion.div
@@ -299,12 +316,20 @@ function App(): React.JSX.Element {
               animate={{ opacity: 1, x: 0 }}
               className="flex items-center space-x-3"
             >
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-blue-600 rounded-xl flex items-center justify-center shadow-md">
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md transition-all duration-300 ${
+                scrolled 
+                  ? 'bg-gradient-to-br from-blue-500 to-indigo-600' 
+                  : 'bg-white/10 backdrop-blur-sm border border-white/20'
+              }`}>
                 <Code className="w-6 h-6 text-white" />
               </div>
               <div>
-                <span className="text-2xl font-bold text-foreground">Robocode</span>
-                <div className="text-xs text-muted-foreground font-medium">Professional Development</div>
+                <span className={`text-2xl font-bold drop-shadow-sm transition-colors duration-300 ${
+                  scrolled ? 'text-gray-900' : 'text-white'
+                }`}>Robocode</span>
+                <div className={`text-xs font-medium drop-shadow-sm transition-colors duration-300 ${
+                  scrolled ? 'text-gray-600' : 'text-white/80'
+                }`}>Professional Development</div>
               </div>
             </motion.div>
 
@@ -320,10 +345,14 @@ function App(): React.JSX.Element {
                 <button
                   key={item.key}
                   onClick={() => scrollToSection(item.key)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                     activeSection === item.key
-                      ? 'bg-primary text-primary-foreground shadow-sm'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                      ? scrolled
+                        ? 'bg-blue-100 text-blue-700 shadow-sm'
+                        : 'bg-white/15 text-white shadow-sm border border-white/25 backdrop-blur-sm'
+                      : scrolled
+                        ? 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                        : 'text-white/90 hover:text-white hover:bg-white/10'
                   }`}
                 >
                   {item.label}
@@ -338,7 +367,11 @@ function App(): React.JSX.Element {
                 variant="outline"
                 size="sm"
                 onClick={toggleLanguage}
-                className="hidden md:flex items-center space-x-1"
+                className={`hidden md:flex items-center space-x-1 transition-all duration-300 ${
+                  scrolled
+                    ? 'border-gray-300 text-gray-600 hover:bg-gray-100 hover:text-gray-900 bg-white'
+                    : 'border-white/20 text-white/90 hover:bg-white/10 hover:text-white backdrop-blur-sm bg-white/5'
+                }`}
               >
                 <Globe size={16} />
                 <span>{currentLanguage.toUpperCase()}</span>
@@ -347,7 +380,11 @@ function App(): React.JSX.Element {
               {/* CTA Button */}
               <Button
                 onClick={() => scrollToSection('contact')}
-                className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 font-medium"
+                className={`hidden md:flex px-6 py-2 font-medium shadow-lg backdrop-blur-sm transition-all duration-300 ${
+                  scrolled
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white'
+                    : 'bg-white/90 text-blue-700 hover:bg-white hover:text-blue-800'
+                }`}
                 size="sm"
               >
                 Cotizar Proyecto
@@ -361,7 +398,11 @@ function App(): React.JSX.Element {
                   window.location.pathname = '/admin'
                   setShowAdmin(true)
                 }}
-                className="text-xs opacity-50 hover:opacity-100"
+                className={`text-xs transition-all duration-300 ${
+                  scrolled
+                    ? 'text-gray-400 hover:text-gray-600 hover:bg-gray-100'
+                    : 'text-white/60 hover:text-white/90 hover:bg-white/10'
+                }`}
               >
                 <Gear className="w-3 h-3" />
               </Button>
@@ -413,14 +454,23 @@ function App(): React.JSX.Element {
         </AnimatePresence>
       </nav>
 
-      {/* Hero Section */}
-      <section id="home" className="pt-16 min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-background to-muted/30">
-        {/* Enhanced background pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-10 w-32 h-32 border border-primary rounded-full animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-20 h-20 border border-primary rounded-lg rotate-45 animate-pulse delay-300"></div>
-          <div className="absolute bottom-40 left-1/4 w-16 h-16 border border-primary rounded-full animate-pulse delay-700"></div>
-          <div className="absolute bottom-20 right-1/3 w-24 h-24 border border-primary rounded-lg rotate-12 animate-pulse delay-500"></div>
+      {/* Hero Section - Sora Inspired Design */}
+      <section id="home" className="pt-16 min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-cyan-300 via-blue-500 to-indigo-700">
+        {/* Sora-style background overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-0 left-0 w-full h-full" style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 1px, transparent 1px),
+                            radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}></div>
+        </div>
+        {/* Enhanced geometric elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-10 w-32 h-32 border border-white rounded-full animate-pulse"></div>
+          <div className="absolute top-40 right-20 w-20 h-20 border border-white rounded-lg rotate-45 animate-pulse delay-300"></div>
+          <div className="absolute bottom-40 left-1/4 w-16 h-16 border border-white rounded-full animate-pulse delay-700"></div>
+          <div className="absolute bottom-20 right-1/3 w-24 h-24 border border-white rounded-lg rotate-12 animate-pulse delay-500"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
@@ -431,16 +481,16 @@ function App(): React.JSX.Element {
               transition={{ duration: 0.8 }}
               className="mb-12"
             >
-              <div className="w-24 h-24 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg">
-                <Code className="w-12 h-12 text-primary-foreground" />
+              <div className="w-24 h-24 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-xl border border-white/20">
+                <Code className="w-12 h-12 text-white" />
               </div>
-              <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight">
+              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
                 Soluciones Digitales <br />
-                <span className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-cyan-400 to-blue-300 bg-clip-text text-transparent">
                   Empresariales
                 </span>
               </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground mb-4 max-w-4xl mx-auto">
+              <p className="text-xl md:text-2xl text-white/90 mb-4 max-w-4xl mx-auto">
                 Desarrollamos sistemas complejos de software que impulsan el crecimiento empresarial 
                 con tecnologías de vanguardia.
               </p>
@@ -455,16 +505,16 @@ function App(): React.JSX.Element {
             >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">50+</div>
-                  <div className="text-sm text-muted-foreground uppercase tracking-wide">Proyectos Exitosos</div>
+                  <div className="text-3xl font-bold text-cyan-400 mb-2">50+</div>
+                  <div className="text-sm text-white/70 uppercase tracking-wide">Proyectos Exitosos</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">5+</div>
-                  <div className="text-sm text-muted-foreground uppercase tracking-wide">Años de Experiencia</div>
+                  <div className="text-3xl font-bold text-cyan-400 mb-2">5+</div>
+                  <div className="text-sm text-white/70 uppercase tracking-wide">Años de Experiencia</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">98%</div>
-                  <div className="text-sm text-muted-foreground uppercase tracking-wide">Satisfacción Cliente</div>
+                  <div className="text-3xl font-bold text-cyan-400 mb-2">98%</div>
+                  <div className="text-sm text-white/70 uppercase tracking-wide">Satisfacción Cliente</div>
                 </div>
               </div>
             </motion.div>
@@ -476,18 +526,18 @@ function App(): React.JSX.Element {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="mb-10"
             >
-              <p className="text-sm text-muted-foreground uppercase tracking-wide mb-4">Especializados en</p>
+              <p className="text-sm text-white/70 uppercase tracking-wide mb-4">Especializados en</p>
               <div className="flex flex-wrap justify-center gap-3">
-                <Badge variant="outline" className="px-4 py-2 text-sm font-medium">
+                <Badge variant="outline" className="px-4 py-2 text-sm font-medium border-white/30 text-white hover:bg-white/10">
                   Odoo ERP
                 </Badge>
-                <Badge variant="outline" className="px-4 py-2 text-sm font-medium">
+                <Badge variant="outline" className="px-4 py-2 text-sm font-medium border-white/30 text-white hover:bg-white/10">
                   Salesforce CRM
                 </Badge>
-                <Badge variant="outline" className="px-4 py-2 text-sm font-medium">
+                <Badge variant="outline" className="px-4 py-2 text-sm font-medium border-white/30 text-white hover:bg-white/10">
                   React & Node.js
                 </Badge>
-                <Badge variant="outline" className="px-4 py-2 text-sm font-medium">
+                <Badge variant="outline" className="px-4 py-2 text-sm font-medium border-white/30 text-white hover:bg-white/10">
                   Integrations API
                 </Badge>
               </div>
@@ -501,7 +551,7 @@ function App(): React.JSX.Element {
             >
               <Button 
                 onClick={() => scrollToSection('portfolio')}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all"
+                className="bg-white text-blue-700 hover:bg-gray-100 px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all"
                 size="lg"
               >
                 Ver Nuestros Proyectos
@@ -510,7 +560,7 @@ function App(): React.JSX.Element {
               <Button 
                 variant="outline" 
                 onClick={() => scrollToSection('contact')}
-                className="px-8 py-4 text-lg font-medium border-2 hover:bg-primary hover:text-primary-foreground transition-all"
+                className="px-8 py-4 text-lg font-medium border-2 border-white/30 text-white hover:bg-white/10 hover:border-white transition-all backdrop-blur-sm"
                 size="lg"
               >
                 Solicitar Cotización
@@ -672,9 +722,13 @@ function App(): React.JSX.Element {
         </div>
       </section>
 
-      {/* Enhanced Services Section - PHASE 2 */}
-      <section className="py-20 bg-gradient-to-br from-muted/30 to-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Enhanced Services Section - Sora Inspired */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-3xl opacity-30 -translate-y-1/2 translate-x-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-full blur-3xl opacity-30 translate-y-1/2 -translate-x-1/2"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -682,22 +736,23 @@ function App(): React.JSX.Element {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Nuestros <span className="text-primary">Servicios</span> Especializados
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Nuestros <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Servicios</span> Especializados
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Soluciones tecnológicas integrales que impulsan la transformación digital de tu empresa
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {[
               {
                 title: "Desarrollo Odoo ERP",
                 description: "Implementación y personalización completa de sistemas ERP empresariales",
                 features: ["Módulos Personalizados", "Migración de Datos", "Integración APIs", "Capacitación"],
                 icon: Gear,
-                color: "from-green-500 to-emerald-600",
+                gradient: "from-green-400 to-emerald-500",
+                bgGradient: "from-green-50 to-emerald-50",
                 technologies: ["Python", "PostgreSQL", "JavaScript", "XML"]
               },
               {
@@ -705,7 +760,8 @@ function App(): React.JSX.Element {
                 description: "Desarrollo avanzado en el ecosistema Salesforce para automatización de ventas",
                 features: ["Apex Development", "Lightning Components", "Flow Automation", "Einstein AI"],
                 icon: Briefcase,
-                color: "from-blue-500 to-cyan-600",
+                gradient: "from-blue-400 to-cyan-500",
+                bgGradient: "from-blue-50 to-cyan-50",
                 technologies: ["Apex", "SOQL", "Lightning", "Visualforce"]
               },
               {
@@ -713,7 +769,8 @@ function App(): React.JSX.Element {
                 description: "Aplicaciones web escalables con tecnologías de última generación",
                 features: ["React Applications", "API Development", "Cloud Deployment", "Mobile Responsive"],
                 icon: Code,
-                color: "from-purple-500 to-indigo-600",
+                gradient: "from-purple-400 to-indigo-500",
+                bgGradient: "from-purple-50 to-indigo-50",
                 technologies: ["React", "Node.js", "TypeScript", "AWS"]
               },
               {
@@ -721,7 +778,8 @@ function App(): React.JSX.Element {
                 description: "Asesoramiento estratégico para modernización y optimización tecnológica",
                 features: ["Arquitectura de Software", "Code Review", "Performance Optimization", "Security Audit"],
                 icon: Users,
-                color: "from-orange-500 to-red-600",
+                gradient: "from-orange-400 to-red-500",
+                bgGradient: "from-orange-50 to-red-50",
                 technologies: ["DevOps", "Docker", "CI/CD", "Analytics"]
               }
             ].map((service, index) => (
@@ -729,44 +787,78 @@ function App(): React.JSX.Element {
                 key={service.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
                 viewport={{ once: true }}
                 className="group"
               >
-                <Card className="h-full hover:shadow-2xl transition-all duration-500 border-0 bg-white/90 backdrop-blur-sm group-hover:-translate-y-2">
-                  <CardHeader className="pb-4">
-                    <div className={`w-16 h-16 bg-gradient-to-br ${service.color} rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
-                      <service.icon className="w-8 h-8 text-white" />
+                <Card className="h-full hover:shadow-2xl transition-all duration-500 border-0 bg-white overflow-hidden group-hover:-translate-y-2">
+                  {/* Mock Screenshot Header */}
+                  <div className={`h-40 bg-gradient-to-br ${service.bgGradient} relative overflow-hidden`}>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      {/* Simulated dashboard interface */}
+                      <div className="w-full h-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg mx-4 mt-4 mb-2 flex flex-col">
+                        <div className="h-6 bg-white/30 rounded-t-lg flex items-center px-2">
+                          <div className="flex space-x-1">
+                            <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                            <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                          </div>
+                        </div>
+                        <div className="flex-1 p-3 space-y-2">
+                          <div className="h-3 bg-white/40 rounded w-3/4"></div>
+                          <div className="h-3 bg-white/30 rounded w-1/2"></div>
+                          <div className="grid grid-cols-2 gap-2 mt-3">
+                            <div className="h-12 bg-white/40 rounded"></div>
+                            <div className="h-12 bg-white/30 rounded"></div>
+                          </div>
+                          <div className="flex space-x-1 mt-2">
+                            <div className="h-2 bg-white/30 rounded flex-1"></div>
+                            <div className="h-2 bg-white/20 rounded flex-1"></div>
+                            <div className="h-2 bg-white/25 rounded flex-1"></div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <h3 className="text-xl font-bold text-foreground text-center mb-2">
+                    
+                    {/* Service Icon */}
+                    <div className={`absolute -bottom-6 left-6 w-12 h-12 bg-gradient-to-br ${service.gradient} rounded-xl shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform z-10`}>
+                      <service.icon className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+
+                  <CardHeader className="pt-10 pb-4">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">
                       {service.title}
                     </h3>
-                    <p className="text-muted-foreground text-center text-sm">
+                    <p className="text-gray-600 text-sm leading-relaxed">
                       {service.description}
                     </p>
                   </CardHeader>
                   
-                  <CardContent className="pt-0">
+                  <CardContent className="pt-0 pb-6">
                     <div className="space-y-4">
                       {/* Features List */}
                       <div>
-                        <h4 className="font-semibold text-foreground mb-2 text-sm">Características:</h4>
-                        <ul className="space-y-1">
+                        <h4 className="font-semibold text-gray-800 mb-3 text-sm">Características principales:</h4>
+                        <div className="grid grid-cols-1 gap-2">
                           {service.features.map((feature) => (
-                            <li key={feature} className="flex items-center text-xs text-muted-foreground">
-                              <CheckCircle className="w-3 h-3 text-green-600 mr-2 flex-shrink-0" />
+                            <div key={feature} className="flex items-center text-sm text-gray-600">
+                              <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
                               {feature}
-                            </li>
+                            </div>
                           ))}
-                        </ul>
+                        </div>
                       </div>
                       
                       {/* Technology Badges */}
                       <div>
-                        <h4 className="font-semibold text-foreground mb-2 text-sm">Tecnologías:</h4>
-                        <div className="flex flex-wrap gap-1">
+                        <h4 className="font-semibold text-gray-800 mb-3 text-sm">Stack tecnológico:</h4>
+                        <div className="flex flex-wrap gap-2">
                           {service.technologies.map((tech) => (
-                            <Badge key={tech} variant="secondary" className="text-xs px-2 py-1">
+                            <Badge 
+                              key={tech} 
+                              className={`text-xs px-3 py-1 bg-gradient-to-r ${service.gradient} text-white border-0 hover:shadow-md transition-shadow`}
+                            >
                               {tech}
                             </Badge>
                           ))}
@@ -774,8 +866,7 @@ function App(): React.JSX.Element {
                       </div>
                       
                       <Button 
-                        className="w-full mt-4 group-hover:shadow-lg transition-all" 
-                        variant="outline"
+                        className="w-full mt-4 group-hover:shadow-lg transition-all bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white border-0" 
                         size="sm"
                       >
                         Saber Más

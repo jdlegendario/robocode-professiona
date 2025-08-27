@@ -221,7 +221,7 @@ function App(): React.JSX.Element {
     message: ''
   })
 
-  useEffect(() => {
+  useEffect(() => {   
     setCurrentLanguage(i18n.language)
   }, [i18n.language])
 
@@ -520,6 +520,84 @@ function App(): React.JSX.Element {
         </div>
       </section>
 
+      {/* Trust & Credibility Section - PHASE 2 */}
+      <section className="py-20 bg-gradient-to-r from-primary/5 to-blue-50/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              Tecnología de <span className="text-primary">Confianza</span> para 
+              <br />Líderes de la Industria
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Más de 5 años entregando soluciones empresariales robustas con resultados medibles
+            </p>
+          </motion.div>
+
+          {/* Enhanced Statistics Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+            {[
+              { number: "200+", label: "Proyectos Entregados", icon: CheckCircle },
+              { number: "98%", label: "Satisfacción del Cliente", icon: Users },
+              { number: "24/7", label: "Soporte Técnico", icon: Gear },
+              { number: "5+", label: "Años de Experiencia", icon: Calendar }
+            ].map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="text-center group"
+              >
+                <Card className="p-6 h-full hover:shadow-xl transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm">
+                  <CardContent className="p-0">
+                    <div className="w-16 h-16 bg-gradient-to-br from-primary to-blue-600 rounded-2xl mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <stat.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
+                      {stat.number}
+                    </h3>
+                    <p className="text-sm md:text-base text-muted-foreground font-medium">
+                      {stat.label}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Client Logos Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-primary/10"
+          >
+            <h3 className="text-center text-lg font-semibold text-muted-foreground mb-8">
+              Empresas que confían en nuestras soluciones
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center opacity-60">
+              {/* Placeholder for client logos - replace with real logos */}
+              {['Empresa 1', 'Empresa 2', 'Empresa 3', 'Empresa 4'].map((client, index) => (
+                <div
+                  key={client}
+                  className="h-12 bg-muted/30 rounded-lg flex items-center justify-center hover:opacity-100 transition-opacity"
+                >
+                  <span className="text-sm font-medium text-muted-foreground">{client}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* About Section */}
       <section id="about" className="py-20 bg-muted/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -591,6 +669,184 @@ function App(): React.JSX.Element {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Enhanced Services Section - PHASE 2 */}
+      <section className="py-20 bg-gradient-to-br from-muted/30 to-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              Nuestros <span className="text-primary">Servicios</span> Especializados
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Soluciones tecnológicas integrales que impulsan la transformación digital de tu empresa
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                title: "Desarrollo Odoo ERP",
+                description: "Implementación y personalización completa de sistemas ERP empresariales",
+                features: ["Módulos Personalizados", "Migración de Datos", "Integración APIs", "Capacitación"],
+                icon: Gear,
+                color: "from-green-500 to-emerald-600",
+                technologies: ["Python", "PostgreSQL", "JavaScript", "XML"]
+              },
+              {
+                title: "Soluciones Salesforce",
+                description: "Desarrollo avanzado en el ecosistema Salesforce para automatización de ventas",
+                features: ["Apex Development", "Lightning Components", "Flow Automation", "Einstein AI"],
+                icon: Briefcase,
+                color: "from-blue-500 to-cyan-600",
+                technologies: ["Apex", "SOQL", "Lightning", "Visualforce"]
+              },
+              {
+                title: "Desarrollo Web Moderno",
+                description: "Aplicaciones web escalables con tecnologías de última generación",
+                features: ["React Applications", "API Development", "Cloud Deployment", "Mobile Responsive"],
+                icon: Code,
+                color: "from-purple-500 to-indigo-600",
+                technologies: ["React", "Node.js", "TypeScript", "AWS"]
+              },
+              {
+                title: "Consultoría Digital",
+                description: "Asesoramiento estratégico para modernización y optimización tecnológica",
+                features: ["Arquitectura de Software", "Code Review", "Performance Optimization", "Security Audit"],
+                icon: Users,
+                color: "from-orange-500 to-red-600",
+                technologies: ["DevOps", "Docker", "CI/CD", "Analytics"]
+              }
+            ].map((service, index) => (
+              <motion.div
+                key={service.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="group"
+              >
+                <Card className="h-full hover:shadow-2xl transition-all duration-500 border-0 bg-white/90 backdrop-blur-sm group-hover:-translate-y-2">
+                  <CardHeader className="pb-4">
+                    <div className={`w-16 h-16 bg-gradient-to-br ${service.color} rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
+                      <service.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground text-center mb-2">
+                      {service.title}
+                    </h3>
+                    <p className="text-muted-foreground text-center text-sm">
+                      {service.description}
+                    </p>
+                  </CardHeader>
+                  
+                  <CardContent className="pt-0">
+                    <div className="space-y-4">
+                      {/* Features List */}
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-2 text-sm">Características:</h4>
+                        <ul className="space-y-1">
+                          {service.features.map((feature) => (
+                            <li key={feature} className="flex items-center text-xs text-muted-foreground">
+                              <CheckCircle className="w-3 h-3 text-green-600 mr-2 flex-shrink-0" />
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      {/* Technology Badges */}
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-2 text-sm">Tecnologías:</h4>
+                        <div className="flex flex-wrap gap-1">
+                          {service.technologies.map((tech) => (
+                            <Badge key={tech} variant="secondary" className="text-xs px-2 py-1">
+                              {tech}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <Button 
+                        className="w-full mt-4 group-hover:shadow-lg transition-all" 
+                        variant="outline"
+                        size="sm"
+                      >
+                        Saber Más
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Process Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="mt-20"
+          >
+            <div className="text-center mb-12">
+              <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Nuestro <span className="text-primary">Proceso</span> de Trabajo
+              </h3>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Metodología probada que garantiza resultados excepcionales
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  step: "01",
+                  title: "Estrategia",
+                  description: "Análisis profundo de necesidades y definición de arquitectura técnica"
+                },
+                {
+                  step: "02", 
+                  title: "Diseño",
+                  description: "Prototipado y diseño de interfaces centradas en la experiencia del usuario"
+                },
+                {
+                  step: "03",
+                  title: "Desarrollo",
+                  description: "Implementación ágil con testing continuo y deployment automatizado"
+                }
+              ].map((process, index) => (
+                <motion.div
+                  key={process.step}
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                  className="text-center"
+                >
+                  <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-bold">
+                    {process.step}
+                  </div>
+                  <h4 className="text-xl font-bold text-foreground mb-2">
+                    {process.title}
+                  </h4>
+                  <p className="text-muted-foreground">
+                    {process.description}
+                  </p>
+                  {index < 2 && (
+                    <div className="hidden md:block absolute top-8 left-full w-8 h-px bg-primary/30 transform translate-x-4"></div>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 

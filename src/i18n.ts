@@ -131,6 +131,49 @@ const resources = {
         mainFeatures: "Main Features:",
         techStack: "Tech Stack:"
       },
+      trust: {
+        title: "Trusted Technology for",
+        subtitle: "Industry Leaders",
+        description: "Over 5 years delivering robust enterprise solutions with measurable results",
+        stats: {
+          projects: {
+            number: "200+",
+            label: "Projects Delivered"
+          },
+          satisfaction: {
+            number: "98%",
+            label: "Client Satisfaction"
+          },
+          support: {
+            number: "24/7",
+            label: "Technical Support"
+          },
+          experience: {
+            number: "5+",
+            label: "Years Experience"
+          }
+        },
+        clients: "Companies that trust our solutions"
+      },
+      process: {
+        title: "Our Work",
+        subtitle: "Process",
+        description: "A proven methodology that ensures exceptional results in every project",
+        steps: {
+          strategy: {
+            title: "Strategy",
+            description: "In-depth needs analysis and technical architecture definition"
+          },
+          design: {
+            title: "Design",
+            description: "Prototyping and interface design focused on user experience"
+          },
+          development: {
+            title: "Development",
+            description: "Agile implementation with continuous testing and automated deployment"
+          }
+        }
+      },
       footer: {
         subtitle: "Professional Development Team • Ecuador"
       },
@@ -269,6 +312,49 @@ const resources = {
         learnMore: "Saber Más",
         mainFeatures: "Características principales:",
         techStack: "Stack tecnológico:"
+      },
+      trust: {
+        title: "Confianza de",
+        subtitle: "Líderes de la Industria",
+        description: "Hemos ganado la confianza de empresas a nivel mundial con nuestras soluciones confiables y servicio excepcional",
+        stats: {
+          projects: {
+            number: "200+",
+            label: "Proyectos Entregados"
+          },
+          satisfaction: {
+            number: "98%",
+            label: "Satisfacción del Cliente"
+          },
+          support: {
+            number: "24/7",
+            label: "Soporte Técnico"
+          },
+          experience: {
+            number: "5+",
+            label: "Años de Experiencia"
+          }
+        },
+        clients: "Nuestros Clientes"
+      },
+      process: {
+        title: "Nuestro Proceso",
+        subtitle: "de Trabajo",
+        description: "Una metodología probada que asegura resultados excepcionales en cada proyecto",
+        steps: {
+          strategy: {
+            title: "Estrategia y Planificación",
+            description: "Analizamos las necesidades de tu negocio y diseñamos una estrategia integral de solución"
+          },
+          design: {
+            title: "Diseño y Arquitectura", 
+            description: "Creamos interfaces intuitivas y arquitecturas de sistema robustas"
+          },
+          development: {
+            title: "Desarrollo y Entrega",
+            description: "Implementamos soluciones con mejores prácticas y entregamos resultados excepcionales"
+          }
+        }
       },
       footer: {
         subtitle: "Equipo de Desarrollo Profesional • Ecuador"

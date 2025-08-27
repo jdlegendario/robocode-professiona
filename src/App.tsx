@@ -580,24 +580,23 @@ function App(): React.JSX.Element {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Tecnología de <span className="text-primary">Confianza</span> para 
-              <br />Líderes de la Industria
+              {t('trust.title')} <span className="text-primary">{t('trust.subtitle')}</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Más de 5 años entregando soluciones empresariales robustas con resultados medibles
+              {t('trust.description')}
             </p>
           </motion.div>
 
           {/* Enhanced Statistics Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
             {[
-              { number: "200+", label: "Proyectos Entregados", icon: CheckCircle },
-              { number: "98%", label: "Satisfacción del Cliente", icon: Users },
-              { number: "24/7", label: "Soporte Técnico", icon: Gear },
-              { number: "5+", label: "Años de Experiencia", icon: Calendar }
+              { key: "projects", icon: CheckCircle },
+              { key: "satisfaction", icon: Users },
+              { key: "support", icon: Gear },
+              { key: "experience", icon: Calendar }
             ].map((stat, index) => (
               <motion.div
-                key={stat.label}
+                key={stat.key}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -610,10 +609,10 @@ function App(): React.JSX.Element {
                       <stat.icon className="w-8 h-8 text-white" />
                     </div>
                     <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-                      {stat.number}
+                      {t(`trust.stats.${stat.key}.number`)}
                     </h3>
                     <p className="text-sm md:text-base text-muted-foreground font-medium">
-                      {stat.label}
+                      {t(`trust.stats.${stat.key}.label`)}
                     </p>
                   </CardContent>
                 </Card>
@@ -630,7 +629,7 @@ function App(): React.JSX.Element {
             className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-primary/10"
           >
             <h3 className="text-center text-lg font-semibold text-muted-foreground mb-8">
-              Empresas que confían en nuestras soluciones
+              {t('trust.clients')}
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center opacity-60">
               {/* Placeholder for client logos - replace with real logos */}
@@ -880,10 +879,10 @@ function App(): React.JSX.Element {
           >
             <div className="text-center mb-12">
               <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Nuestro <span className="text-primary">Proceso</span> de Trabajo
+                {t('process.title')} <span className="text-primary">{t('process.subtitle')}</span>
               </h3>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Metodología probada que garantiza resultados excepcionales
+                {t('process.description')}
               </p>
             </div>
             
@@ -891,18 +890,15 @@ function App(): React.JSX.Element {
               {[
                 {
                   step: "01",
-                  title: "Estrategia",
-                  description: "Análisis profundo de necesidades y definición de arquitectura técnica"
+                  key: "strategy"
                 },
                 {
                   step: "02", 
-                  title: "Diseño",
-                  description: "Prototipado y diseño de interfaces centradas en la experiencia del usuario"
+                  key: "design"
                 },
                 {
                   step: "03",
-                  title: "Desarrollo",
-                  description: "Implementación ágil con testing continuo y deployment automatizado"
+                  key: "development"
                 }
               ].map((process, index) => (
                 <motion.div
@@ -917,10 +913,10 @@ function App(): React.JSX.Element {
                     {process.step}
                   </div>
                   <h4 className="text-xl font-bold text-foreground mb-2">
-                    {process.title}
+                    {t(`process.steps.${process.key}.title`)}
                   </h4>
                   <p className="text-muted-foreground">
-                    {process.description}
+                    {t(`process.steps.${process.key}.description`)}
                   </p>
                   {index < 2 && (
                     <div className="hidden md:block absolute top-8 left-full w-8 h-px bg-primary/30 transform translate-x-4"></div>

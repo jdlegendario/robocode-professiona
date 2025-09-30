@@ -16,18 +16,46 @@ const resources = {
       home: {
         title: "Robocode",
         subtitle: "The Robocoders",
-        description: "Developing complex software systems that drive business growth with cutting-edge technologies.",
-        heroTitle: "Enterprise Digital",
-        heroSubtitle: "Solutions",
+  description: "Designing multi-cloud CRM, ERP, and web products that accelerate revenue teams.",
+  heroTitle: "Deliver measurable impact with",
+  heroHighlight: "specialized Salesforce, Odoo & web teams",
+  heroDescription: "We architect CRM, ERP, and product experiences in ≤5 weeks with a cross-functional certified squad.",
         odoo: "Odoo",
         salesforce: "Salesforce", 
         viewWork: "View Our Projects",
         getQuote: "Request Quote",
-        specializedIn: "Specialized in",
+    specializedIn: "Specialized in",
+    motto: "A young and dynamic team with the vision and energy to transform the world.",
         stats: {
-          projects: "Successful Projects",
-          experience: "Years Experience", 
-          satisfaction: "Client Satisfaction"
+          implementation: {
+            value: "4-5 weeks",
+            label: "Average rollout across Salesforce & Odoo"
+          },
+          savings: {
+            value: "-35%",
+            label: "Average operations savings delivered"
+          },
+          nps: {
+            value: "87 NPS",
+          salesforceSri: {
+            title: "Facturación electrónica Salesforce en tiempo real",
+            description: "Automatización del ciclo de facturas con el API del SRI Ecuador.",
+            fullDescription: "Construimos una experiencia gestionada en Salesforce que genera facturas electrónicas, las firma digitalmente y las envía al SRI en tiempo real. La plataforma reconcilia estados de aprobación, dispara notificaciones y sincroniza documentos fiscales con ERP y BI.",
+            client: "Scale-up SaaS • Ecuador",
+            features: [
+              "Salesforce Flow orquestando eventos de facturación",
+              "Generación de firma digital y sobres XML",
+              "Monitoreo en tiempo real del estado SRI con reintentos",
+              "Sincronización bidireccional con ERP y data lake"
+            ],
+            meta: {
+              stack: ["Salesforce Apex", "Salesforce Flow", "API SRI", "AWS Lambda"],
+              duration: "5 semanas",
+              impact: "100% de cumplimiento con aprobaciones en minutos"
+            }
+          },
+            label: "CRM, ERP & web engagements delivered"
+          }
         },
         technologies: {
           odooErp: "Odoo ERP",
@@ -43,12 +71,115 @@ const resources = {
       },
       portfolio: {
         title: "Our Portfolio",
-        subtitle: "Showcase of our expertise in enterprise solutions and modern web development",
+        subtitle: "Salesforce, Odoo, and web delivery highlights for enterprise teams",
         all: "All",
         categories: {
           odoo: "Odoo",
-          salesforce: "Salesforce", 
-          web: "Web Development"
+          integrations: "Salesforce & Integrations",
+          automation: "Automation",
+          bi: "Business Intelligence"
+        },
+        projects: {
+          odooSuite: {
+            title: "Odoo supply chain suite",
+            description: "Manufacturing ERP with automated MRP, quality, and logistics workflows.",
+            fullDescription: "We delivered a fully integrated Odoo ecosystem covering MRP, inventory, quality, and logistics for a LATAM manufacturer. In 5 weeks we automated planning, introduced quality checkpoints, and connected third-party logistics with a hardened CI/CD pipeline.",
+            client: "Industrial manufacturer • LATAM",
+            features: [
+              "Advanced MRP rules and demand forecasting",
+              "Automated quality gates with digital traceability",
+              "Logistics orchestration with 3PL integrations",
+              "CI/CD pipeline for zero-downtime releases"
+            ],
+            meta: {
+              stack: ["Odoo MRP", "PostgreSQL", "Docker", "GitHub Actions"],
+              duration: "5 weeks",
+              impact: "-35% annual maintenance spend"
+            }
+          },
+          integrationLayer: {
+            title: "Financial integrations hub",
+            description: "Unified middleware connecting Odoo with banking, CRM, and BI stacks.",
+            fullDescription: "We launched a resilient integration layer synchronising transactions between Odoo, global banking APIs, Salesforce, and Power BI. Asynchronous queues and automated reconciliation guarantee clean data in every downstream system.",
+            client: "Fintech scale-up • North America",
+            features: [
+              "Banking connectors with automatic reconciliation",
+              "CRM enrichment and 360º customer view",
+              "Event-driven architecture with observability dashboards",
+              "Disaster-recovery playbooks and runbooks"
+            ],
+            meta: {
+              stack: ["Odoo API", "MuleSoft", "Azure Service Bus", "Grafana"],
+              duration: "6 weeks",
+              impact: "99.7% sync accuracy across platforms"
+            }
+          },
+          salesforceSri: {
+            title: "Salesforce real-time e-invoicing",
+            description: "Invoice lifecycle automation with Ecuador SRI API compliance.",
+            fullDescription: "We built a managed Salesforce experience that generates electronic invoices, signs them digitally, and submits them to Ecuador's SRI in real time. The platform reconciles approval states, triggers notifications, and syncs fiscal documents with ERP and BI systems.",
+            client: "SaaS scale-up • Ecuador",
+            features: [
+              "Salesforce Flow orchestrating billing events",
+              "Digital signature and XML envelope generation",
+              "Real-time SRI status tracking with retries",
+              "Two-way sync with ERP ledger and data lake"
+            ],
+            meta: {
+              stack: ["Salesforce Apex", "Salesforce Flow", "SRI API", "AWS Lambda"],
+              duration: "5 weeks",
+              impact: "100% compliance with sub-minute approvals"
+            }
+          },
+          automationBilling: {
+            title: "Subscription billing automation",
+            description: "Automated invoicing, dunning, and revenue recognition for SaaS operations.",
+            fullDescription: "We modernised a SaaS billing workflow by orchestrating Odoo Accounting, Stripe, and custom Celery workers. The result: automated invoicing, dunning journeys, and GAAP-compliant revenue recognition with near real-time dashboards.",
+            client: "SaaS provider • United States",
+            features: [
+              "Usage-based billing and proration rules",
+              "Automated dunning with multi-channel outreach",
+              "Revenue recognition aligned with ASC 606",
+              "Executive dashboard with predictive churn KPIs"
+            ],
+            meta: {
+              stack: ["Odoo Accounting", "Stripe", "Celery", "Redis"],
+              duration: "4 weeks",
+              impact: "+40% B2B conversion after automation"
+            }
+          },
+          biInsights: {
+            title: "Executive BI for Odoo",
+            description: "Data lake and dashboards delivering near real-time KPIs across operations.",
+            fullDescription: "We created a governed analytics layer pulling clean data from Odoo into a dbt-powered warehouse and Power BI dashboards. Leadership gained actionable KPIs, cohort analysis, and automated alerts for anomalies.",
+            client: "Retail conglomerate • LATAM",
+            features: [
+              "dbt models with automated data quality checks",
+              "Self-service dashboards for finance and ops",
+              "Anomaly detection with proactive notifications",
+              "Data lake architecture with role-based access"
+            ],
+            meta: {
+              stack: ["Odoo Data Lake", "dbt", "Power BI", "Python"],
+              duration: "7 weeks",
+              impact: "+28% faster decision cycles"
+            }
+          }
+        },
+        metaLabels: {
+          stack: "Stack",
+          duration: "Duration",
+          impact: "Impact"
+        },
+        ctaFullCase: "Request full case study",
+        modal: {
+          clientLabel: "Client",
+          categoryLabel: "Category",
+          technologiesLabel: "Technologies",
+          descriptionLabel: "Description",
+          featuresLabel: "Key Features",
+          viewProject: "View Project",
+          confidential: "Confidential"
         }
       },
       blog: {
@@ -69,7 +200,7 @@ const resources = {
         info: {
           title: "Get in Touch",
           email: "contact@robocode.dev",
-          location: "Based in Ecuador"
+          location: "Based in Guayaquil, Ecuador"
         },
         expertise: {
           title: "Our Expertise",
@@ -84,7 +215,7 @@ const resources = {
       services: {
         title: "Our Specialized",
         subtitle: "Services",
-        description: "Comprehensive technology solutions that drive your company's digital transformation",
+  description: "Multi-cloud squads delivering Salesforce, Odoo, and full-stack product launches",
         items: {
           odooErp: {
             title: "Odoo ERP Development",
@@ -98,7 +229,7 @@ const resources = {
           },
           salesforce: {
             title: "Salesforce Solutions",
-            description: "Advanced development in the Salesforce ecosystem for sales automation",
+            description: "Revenue, service, and marketing automation across the Salesforce platform",
             features: {
               apexDev: "Apex Development",
               lightningComponents: "Lightning Components", 
@@ -108,7 +239,7 @@ const resources = {
           },
           webDev: {
             title: "Modern Web Development",
-            description: "Scalable web applications with cutting-edge technologies",
+            description: "React, Node.js, and UX teams crafting scalable digital products",
             features: {
               reactApps: "React Applications",
               apiDev: "API Development",
@@ -118,7 +249,7 @@ const resources = {
           },
           consulting: {
             title: "Digital Consulting",
-            description: "Strategic advisory for technological modernization and optimization",
+            description: "Strategic advisory spanning CRM, ERP, and product modernization",
             features: {
               softwareArch: "Software Architecture",
               codeReview: "Code Review",
@@ -132,28 +263,35 @@ const resources = {
         techStack: "Tech Stack:"
       },
       trust: {
-        title: "Trusted Technology for",
+        title: "Trusted by",
         subtitle: "Industry Leaders",
-        description: "Over 5 years delivering robust enterprise solutions with measurable results",
+  description: "Over 5 years shipping Salesforce, Odoo, and product programs with measurable outcomes",
         stats: {
           projects: {
             number: "200+",
-            label: "Projects Delivered"
+            label: "Cross-cloud programs delivered"
           },
           satisfaction: {
             number: "98%",
-            label: "Client Satisfaction"
+            label: "Client satisfaction across CRM, ERP & web"
           },
           support: {
             number: "24/7",
-            label: "Technical Support"
+            label: "Follow-the-sun technical support"
           },
           experience: {
             number: "5+",
-            label: "Years Experience"
+            label: "Years orchestrating CRM/ERP transformations"
           }
         },
-        clients: "Companies that trust our solutions"
+          clients: "Companies that trust our solutions",
+          logos: ["Andina Foods", "Finanzas360", "LogistiCore", "Flux Retail"],
+          testimonial: {
+            quote: "+40% B2B conversion after automating billing and collections.",
+            author: "Laura Peña",
+            role: "CFO • Mid-market SaaS LATAM",
+            cta: "Read full success story"
+          }
       },
       process: {
         title: "Our Work",
@@ -175,7 +313,8 @@ const resources = {
         }
       },
       footer: {
-        subtitle: "Professional Development Team • Ecuador"
+        subtitle: "Professional Development Team • Ecuador",
+        credit: "Developed by Robocode"
       },
       messages: {
         success: "Message sent successfully! We'll get back to you soon.",
@@ -198,18 +337,29 @@ const resources = {
       home: {
         title: "Robocode",
         subtitle: "Los Robocoders",
-        description: "Desarrollamos sistemas complejos de software que impulsan el crecimiento empresarial con tecnologías de vanguardia.",
-        heroTitle: "Soluciones Digitales",
-        heroSubtitle: "Empresariales",
+  description: "Diseñamos productos CRM, ERP y web multicloud que aceleran a los equipos comerciales.",
+  heroTitle: "Impulsa resultados medibles con",
+  heroHighlight: "equipos expertos en Salesforce, Odoo y web",
+  heroDescription: "Diseñamos experiencias CRM, ERP y productos digitales en ≤5 semanas con una escuadra certificada multidisciplinaria.",
         odoo: "Odoo",
         salesforce: "Salesforce",
         viewWork: "Ver Nuestros Proyectos",
         getQuote: "Solicitar Cotización",
-        specializedIn: "Especializados en",
+    specializedIn: "Especializados en",
+    motto: "Un equipo joven y dinámico, con la visión y la energía para transformar el mundo.",
         stats: {
-          projects: "Proyectos Exitosos",
-          experience: "Años de Experiencia",
-          satisfaction: "Satisfacción Cliente"
+          implementation: {
+            value: "4-5 semanas",
+            label: "Despliegue promedio en Salesforce y Odoo"
+          },
+          savings: {
+            value: "-35%",
+            label: "Ahorro operativo promedio logrado"
+          },
+          nps: {
+            value: "87 NPS",
+            label: "Proyectos CRM, ERP y web entregados"
+          }
         },
         technologies: {
           odooErp: "Odoo ERP",
@@ -225,12 +375,115 @@ const resources = {
       },
       portfolio: {
         title: "Nuestro Portafolio",
-        subtitle: "Muestra de nuestra experiencia en soluciones empresariales y desarrollo web moderno",
+        subtitle: "Casos destacados en Salesforce, Odoo y experiencias web para empresas",
         all: "Todos",
         categories: {
           odoo: "Odoo",
-          salesforce: "Salesforce",
-          web: "Desarrollo Web"
+          integrations: "Salesforce e Integraciones",
+          automation: "Automatización",
+          bi: "Business Intelligence"
+        },
+        projects: {
+          odooSuite: {
+            title: "Suite Odoo para cadena de suministro",
+            description: "ERP manufacturero con MRP automatizado, calidad y logística integrados.",
+            fullDescription: "Entregamos un ecosistema Odoo que cubre MRP, inventario, calidad y logística para un fabricante en LATAM. En 5 semanas automatizamos la planificación, sumamos checkpoints de calidad e integramos la logística externa con un pipeline CI/CD robusto.",
+            client: "Fabricante industrial • LATAM",
+            features: [
+              "Reglas MRP avanzadas y forecasting de demanda",
+              "Puertas de calidad automatizadas con trazabilidad digital",
+              "Orquestación logística con integraciones 3PL",
+              "Pipeline CI/CD para despliegues sin downtime"
+            ],
+            meta: {
+              stack: ["Odoo MRP", "PostgreSQL", "Docker", "GitHub Actions"],
+              duration: "5 semanas",
+              impact: "-35% en costos de mantenimiento"
+            }
+          },
+          integrationLayer: {
+            title: "Hub de integraciones financieras",
+            description: "Middleware unificado que conecta Odoo con banca, CRM y BI.",
+            fullDescription: "Implementamos una capa de integraciones resiliente que sincroniza transacciones entre Odoo, APIs bancarias globales, Salesforce y Power BI. Colas asíncronas y conciliación automática aseguran datos limpios en todos los sistemas.",
+            client: "Fintech en escala • Norteamérica",
+            features: [
+              "Conectores bancarios con conciliación automática",
+              "Enriquecimiento CRM y vista 360° del cliente",
+              "Arquitectura orientada a eventos con observabilidad",
+              "Playbooks de recuperación ante desastres"
+            ],
+            meta: {
+              stack: ["API Odoo", "MuleSoft", "Azure Service Bus", "Grafana"],
+              duration: "6 semanas",
+              impact: "99.7% de exactitud en sincronizaciones"
+            }
+          },
+          salesforceSri: {
+            title: "Facturación electrónica Salesforce en tiempo real",
+            description: "Automatización integral de facturas con cumplimiento SRI Ecuador.",
+            fullDescription: "Construimos una experiencia gestionada en Salesforce que genera facturas electrónicas, las firma digitalmente y las envía al SRI en tiempo real. La plataforma reconcilia estados de aprobación, dispara notificaciones y sincroniza documentos fiscales con ERP y BI.",
+            client: "Scale-up SaaS • Ecuador",
+            features: [
+              "Salesforce Flow orquestando eventos de facturación",
+              "Generación de firma digital y sobres XML",
+              "Seguimiento SRI en tiempo real con reintentos",
+              "Sincronización bidireccional con ERP y data lake"
+            ],
+            meta: {
+              stack: ["Salesforce Apex", "Salesforce Flow", "API SRI", "AWS Lambda"],
+              duration: "5 semanas",
+              impact: "100% de cumplimiento con aprobaciones en minutos"
+            }
+          },
+          automationBilling: {
+            title: "Automatización de facturación por suscripción",
+            description: "Facturación, dunning y revenue recognition automatizados para SaaS.",
+            fullDescription: "Modernizamos el flujo de facturación SaaS orquestando Odoo Accounting, Stripe y workers en Celery. Resultado: facturación automática, journeys de cobranza y revenue recognition conforme a GAAP con dashboards en tiempo real.",
+            client: "Proveedor SaaS • Estados Unidos",
+            features: [
+              "Facturación por uso y reglas de prorrateo",
+              "Dunning automatizado multicanal",
+              "Revenue recognition alineado a ASC 606",
+              "Dashboard ejecutivo con KPIs predictivos"
+            ],
+            meta: {
+              stack: ["Odoo Accounting", "Stripe", "Celery", "Redis"],
+              duration: "4 semanas",
+              impact: "+40% conversión B2B tras la automatización"
+            }
+          },
+          biInsights: {
+            title: "BI ejecutivo para Odoo",
+            description: "Data lake y dashboards con KPIs casi en tiempo real.",
+            fullDescription: "Creamos una capa analítica gobernada que extrae datos limpios de Odoo hacia un warehouse con dbt y dashboards en Power BI. Dirección obtuvo KPIs accionables, análisis por cohortes y alertas automáticas.",
+            client: "Conglomerado retail • LATAM",
+            features: [
+              "Modelos dbt con validaciones automáticas",
+              "Dashboards self-service para finanzas y operaciones",
+              "Detección de anomalías con alertas proactivas",
+              "Arquitectura de data lake con accesos por rol"
+            ],
+            meta: {
+              stack: ["Data Lake Odoo", "dbt", "Power BI", "Python"],
+              duration: "7 semanas",
+              impact: "+28% velocidad en toma de decisiones"
+            }
+          }
+        },
+        metaLabels: {
+          stack: "Stack",
+          duration: "Duración",
+          impact: "Impacto"
+        },
+        ctaFullCase: "Solicitar caso completo",
+        modal: {
+          clientLabel: "Cliente",
+          categoryLabel: "Categoría",
+          technologiesLabel: "Tecnologías",
+          descriptionLabel: "Descripción",
+          featuresLabel: "Características Principales",
+          viewProject: "Ver Proyecto",
+          confidential: "Confidencial"
         }
       },
       blog: {
@@ -251,7 +504,7 @@ const resources = {
         info: {
           title: "Ponte en Contacto",
           email: "contacto@robocode.dev",
-          location: "Con sede en Ecuador"
+          location: "Con sede en Guayaquil, Ecuador"
         },
         expertise: {
           title: "Nuestra Experiencia",
@@ -266,7 +519,7 @@ const resources = {
       services: {
         title: "Nuestros",
         subtitle: "Servicios Especializados",
-        description: "Soluciones tecnológicas integrales que impulsan la transformación digital de tu empresa",
+        description: "Escuadras multicloud para lanzar Salesforce, Odoo y productos full-stack",
         items: {
           odooErp: {
             title: "Desarrollo Odoo ERP",
@@ -280,7 +533,7 @@ const resources = {
           },
           salesforce: {
             title: "Soluciones Salesforce",
-            description: "Desarrollo avanzado en el ecosistema Salesforce para automatización de ventas",
+            description: "Automatización de ventas, servicio y marketing sobre la plataforma Salesforce",
             features: {
               apexDev: "Apex Development",
               lightningComponents: "Lightning Components",
@@ -290,7 +543,7 @@ const resources = {
           },
           webDev: {
             title: "Desarrollo Web Moderno",
-            description: "Aplicaciones web escalables con tecnologías de última generación",
+            description: "Equipos de React, Node.js y UX para productos digitales escalables",
             features: {
               reactApps: "React Applications",
               apiDev: "API Development",
@@ -300,7 +553,7 @@ const resources = {
           },
           consulting: {
             title: "Consultoría Digital",
-            description: "Asesoramiento estratégico para modernización y optimización tecnológica",
+            description: "Asesoría estratégica en CRM, ERP y modernización de productos",
             features: {
               softwareArch: "Arquitectura de Software",
               codeReview: "Code Review",
@@ -316,26 +569,33 @@ const resources = {
       trust: {
         title: "Confianza de",
         subtitle: "Líderes de la Industria",
-        description: "Hemos ganado la confianza de empresas a nivel mundial con nuestras soluciones confiables y servicio excepcional",
+  description: "Más de 5 años lanzando programas Salesforce, Odoo y productos digitales con resultados medibles",
         stats: {
           projects: {
             number: "200+",
-            label: "Proyectos Entregados"
+            label: "Programas multicloud entregados"
           },
           satisfaction: {
             number: "98%",
-            label: "Satisfacción del Cliente"
+            label: "Satisfacción en CRM, ERP y web"
           },
           support: {
             number: "24/7",
-            label: "Soporte Técnico"
+            label: "Soporte técnico follow-the-sun"
           },
           experience: {
             number: "5+",
-            label: "Años de Experiencia"
+            label: "Años orquestando transformaciones CRM/ERP"
           }
         },
-        clients: "Nuestros Clientes"
+          clients: "Nuestros Clientes",
+          logos: ["Andina Foods", "Finanzas360", "LogistiCore", "Flux Retail"],
+          testimonial: {
+            quote: "+40% de conversión en ventas B2B tras automatizar facturación y cobros.",
+            author: "Laura Peña",
+            role: "CFO • SaaS de mercados emergentes",
+            cta: "Leer caso completo"
+          }
       },
       process: {
         title: "Nuestro Proceso",
@@ -357,7 +617,8 @@ const resources = {
         }
       },
       footer: {
-        subtitle: "Equipo de Desarrollo Profesional • Ecuador"
+        subtitle: "Equipo de Desarrollo Profesional • Ecuador",
+        credit: "Desarrollado por Robocode"
       },
       messages: {
         success: "¡Mensaje enviado exitosamente! Te contactaremos pronto.",

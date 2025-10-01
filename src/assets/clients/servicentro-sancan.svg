@@ -1,0 +1,22 @@
+<svg width="240" height="160" viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title>Servicentro Sancán</title>
+  <defs>
+    <linearGradient id="shield" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1f2937" />
+      <stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+    <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f9fafb" />
+      <stop offset="50%" stop-color="#cbd5f5" />
+      <stop offset="100%" stop-color="#f9fafb" />
+    </linearGradient>
+  </defs>
+  <rect width="240" height="160" rx="32" fill="#000" />
+  <path d="M120 20 L200 48 V92 C200 120 166 140 120 148 C74 140 40 120 40 92 V48 Z" fill="url(#shield)" stroke="#9ca3af" stroke-width="6" />
+  <path d="M90 70 C120 60 160 60 184 78" stroke="#ef4444" stroke-width="6" stroke-linecap="round" />
+  <path d="M78 74 C110 44 168 44 190 74" stroke="#ef4444" stroke-width="6" stroke-linecap="round" opacity="0.6" />
+  <path d="M60 86 H180" stroke="#e5e7eb" stroke-width="4" stroke-linecap="round" />
+  <text x="120" y="118" text-anchor="middle" font-family="'Eurostile', 'Poppins', sans-serif" font-weight="700" font-size="24" fill="url(#chrome)">SERVICENTRO</text>
+  <text x="120" y="142" text-anchor="middle" font-family="'Poppins', sans-serif" font-weight="700" font-size="24" letter-spacing="6" fill="#ef4444">SANCÁN</text>
+  <text x="120" y="48" text-anchor="middle" font-family="'Poppins', sans-serif" font-weight="600" font-size="18" fill="#ef4444">1989</text>
+</svg>

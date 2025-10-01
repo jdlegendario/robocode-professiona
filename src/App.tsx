@@ -10,13 +10,13 @@ import { Textarea } from '@/components/ui/textarea'
 import { Separator } from '@/components/ui/separator'
 import { Progress } from '@/components/ui/progress'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { 
-  Code, 
-  Users, 
-  Briefcase, 
-  Envelope, 
-  GithubLogo, 
-  LinkedinLogo, 
+import {
+  Code,
+  Users,
+  Briefcase,
+  Envelope,
+  GithubLogo,
+  LinkedinLogo,
   ArrowRight,
   CheckCircle,
   X,
@@ -30,13 +30,26 @@ import {
   ArrowSquareOut,
   Clock,
   ChartLineUp,
-  Quotes
+  Quotes,
+  DownloadSimple,
+  ShieldCheck,
+  StackSimple,
+  CaretDown,
+  WhatsappLogo
 } from '@phosphor-icons/react'
 import { toast, Toaster } from 'sonner'
 import { useKV } from '@github/spark/hooks'
 import { AuthProvider } from '@/contexts/AuthContext'
 import AdminPanel from '@/admin'
 import { contactAPI } from '@/api'
+import logoMark from '@/assets/robocode-logo.svg'
+import odooArticle from '@/assets/blog/odoo.png'
+import salesforceArticle from '@/assets/blog/salesfource.png'
+import frontendArticle from '@/assets/blog/diseñoweb.png'
+import juanAvatar from '@/assets/nosotros/juan_diego_salazar.png'
+import angeloAlejandroAvatar from '@/assets/nosotros/angelo_alejandro.png'
+import angeloHaroAvatar from '@/assets/nosotros/Angelo_Haro.png'
+import alexRoseroAvatar from '@/assets/nosotros/Alex_fabricio.png'
 
 interface BlogPost {
   id: string
@@ -85,9 +98,55 @@ interface Project {
   id: ProjectId
   category: ProjectCategory
   technologies: string[]
+  tags: string[]
   link?: string
   image?: string
 }
+
+const clientBrands = [
+  {
+    id: 'centro-del-dolor',
+    name: 'Centro del Dolor',
+    gradient: 'from-[#fce7f3] via-[#f5e8ff] to-[#ede9fe]',
+    textColor: 'text-[#7c3aed]'
+  },
+  {
+    id: 'pacios-del-hogar',
+    name: 'Pacios del Hogar',
+    gradient: 'from-[#fef3c7] via-[#fde68a] to-[#fbbf24]',
+    textColor: 'text-[#92400e]'
+  },
+  {
+    id: 'moby-dick',
+    name: 'Moby Dick',
+    gradient: 'from-[#fef3c7] via-[#fcd34d] to-[#f97316]',
+    textColor: 'text-[#78350f]'
+  },
+  {
+    id: 'servicentro-sancan',
+    name: 'Servicentro Sancán',
+    gradient: 'from-[#fee2e2] via-[#fecaca] to-[#fca5a5]',
+    textColor: 'text-[#b91c1c]'
+  },
+  {
+    id: 'electrofacil',
+    name: 'Electrofácil',
+    gradient: 'from-[#dbeafe] via-[#bfdbfe] to-[#93c5fd]',
+    textColor: 'text-[#1e3a8a]'
+  },
+  {
+    id: 'trionica',
+    name: 'Trionica',
+    gradient: 'from-[#ede9fe] via-[#ddd6fe] to-[#c4b5fd]',
+    textColor: 'text-[#5b21b6]'
+  },
+  {
+    id: 'quality-medico',
+    name: 'Quality Médico',
+    gradient: 'from-[#ccfbf1] via-[#99f6e4] to-[#5eead4]',
+    textColor: 'text-[#0f766e]'
+  }
+] as const
 
 const teamMembers: TeamMember[] = [
   {
@@ -131,7 +190,7 @@ const teamMembers: TeamMember[] = [
     },
     linkedin: "https://linkedin.com/in/juan-salazar",
     github: "https://github.com/juan-salazar",
-    avatar: "/api/placeholder/300/300"
+  avatar: juanAvatar
   },
   {
     name: "Angelo Iván Alejandro Vera",
@@ -174,41 +233,41 @@ const teamMembers: TeamMember[] = [
     },
     linkedin: "https://linkedin.com/in/angelo-vera",
     github: "https://github.com/angelo-vera",
-    avatar: "/api/placeholder/300/300"
+  avatar: angeloAlejandroAvatar
   },
   {
     name: "Angelo Haro",
     role: "Salesforce Integration Developer",
-    years: 3,
+    years: 4,
     focus: {
-      en: "CRM automations bridging Salesforce and Odoo",
-      es: "Automatizaciones CRM que conectan Salesforce y Odoo"
+      en: "Service Cloud + Odoo integrations for field operations",
+      es: "Integraciones Service Cloud + Odoo para operaciones de campo"
     },
     summary: {
-      en: "Builds mid-market CRM flows, integrates APIs, and supports customer enablement with pragmatic documentation.",
-      es: "Construye flujos CRM mid-market, integra APIs y apoya la capacitación de clientes con documentación pragmática."
+      en: "Delivers Service Cloud automations, Health Cloud data sync, and Odoo connectors for retail and healthcare brands across Ecuador.",
+      es: "Entrega automatizaciones Service Cloud, sincronización Health Cloud y conectores Odoo para marcas retail y de salud en Ecuador."
     },
     experiences: {
       en: [
-        "Salesforce Developer (2022–present): Lightning components, Apex services, and SOQL automation.",
-        "Integration Analyst: Syncs Salesforce with Odoo inventory and billing signals for regional teams."
+        "Salesforce Integration Lead (2023–present): Orchestrated patient intake, service orders, and billing sync between Salesforce and Odoo for Centro del Dolor and Quality Médico.",
+        "CRM Workflow Specialist (2021–2023): Built multi-cloud flows for Servicentro Sancán and Pacios del Hogar linking inventory, Service Cloud field ops, and marketing journeys."
       ],
       es: [
-        "Salesforce Developer (2022–actualidad): componentes Lightning, servicios Apex y automatización SOQL.",
-        "Integration Analyst: sincroniza Salesforce con señales de inventario y facturación de Odoo para equipos regionales."
+        "Salesforce Integration Lead (2023–actualidad): Orquestó intake de pacientes, órdenes de servicio y sincronización de facturación entre Salesforce y Odoo para Centro del Dolor y Quality Médico.",
+        "CRM Workflow Specialist (2021–2023): Construyó flujos multicloud para Servicentro Sancán y Pacios del Hogar conectando inventarios, operaciones de campo en Service Cloud y journeys de marketing."
       ]
     },
-    skills: ["Salesforce", "API integrations", "Trailhead"],
+    skills: ["Salesforce Service Cloud", "Health Cloud data sync", "Odoo connectors"],
     skillBars: [
-      { name: "Salesforce (Apex & Flow)", level: 72 },
-      { name: "API Integration", level: 70 },
-      { name: "Odoo Connector", level: 65 },
-      { name: "JavaScript", level: 68 },
-      { name: "Documentation", level: 74 }
+      { name: "Salesforce (Apex, Flow, Service)", level: 78 },
+      { name: "API & Middleware Integration", level: 76 },
+      { name: "Odoo Connector", level: 72 },
+      { name: "JavaScript / LWC", level: 74 },
+      { name: "Documentation & Enablement", level: 80 }
     ],
     certifications: {
-      en: ["Salesforce Trailhead Admin Journey"],
-      es: ["Salesforce Trailhead Admin Journey"]
+      en: ["Salesforce Certified Associate", "Trailhead Ranger • Service Cloud path"],
+      es: ["Salesforce Certified Associate", "Trailhead Ranger • Ruta Service Cloud"]
     },
     languages: {
       en: ["Spanish (Native)", "English (B1 • Conversational)"],
@@ -216,49 +275,49 @@ const teamMembers: TeamMember[] = [
     },
     linkedin: "https://linkedin.com/in/angelo-haro",
     github: "https://github.com/angelo-haro",
-    avatar: "/api/placeholder/300/300"
+  avatar: angeloHaroAvatar
   },
   {
     name: "Alex Fabricio Rosero",
     role: "Frontend Developer",
-    years: 2,
+    years: 3,
     focus: {
-      en: "Accessible front-ends with component libraries",
-      es: "Front-ends accesibles con librerías de componentes"
+      en: "E-commerce experience layers with reusable design systems",
+      es: "Experiencias e-commerce con sistemas de diseño reutilizables"
     },
     summary: {
-      en: "Delivers responsive layouts, Tailwind-based design systems, and QA support for product launches.",
-      es: "Entrega maquetas responsive, sistemas de diseño con Tailwind y soporte QA para lanzamientos de producto."
+      en: "Crafts headless storefronts, performance-focused landing pages, and QA playbooks for retail and healthcare campaigns.",
+      es: "Construye vitrinas headless, landing pages enfocadas en performance y playbooks QA para campañas retail y de salud."
     },
     experiences: {
       en: [
-        "Frontend Developer (2023–present): React + TypeScript dashboards and marketing sites.",
-        "UI Support: Implements reusable components and accessibility fixes for internal squads."
+        "Frontend Developer (2023–present): Rebuilt Electrofacil and Pacios del Hogar e-commerce experiences with React, Tailwind, and composable design tokens.",
+        "Design System Steward (2022–2023): Delivered reusable component library powering marketing sites for Trionica, Moby Dick, and Quality Médico."
       ],
       es: [
-        "Frontend Developer (2023–actualidad): dashboards y sitios marketing con React + TypeScript.",
-        "UI Support: implementa componentes reutilizables y ajustes de accesibilidad para squads internos."
+        "Frontend Developer (2023–actualidad): Replanteó las experiencias e-commerce de Electrofacil y Pacios del Hogar con React, Tailwind y design tokens componibles.",
+        "Design System Steward (2022–2023): Entregó librería de componentes reutilizable para los sitios de marketing de Trionica, Moby Dick y Quality Médico."
       ]
     },
-    skills: ["React", "TypeScript", "Tailwind"],
+    skills: ["React storefronts", "Design systems", "A/B testing"],
     skillBars: [
-      { name: "React & TypeScript", level: 70 },
-      { name: "Tailwind / CSS", level: 72 },
-      { name: "Design Systems", level: 65 },
-      { name: "Testing & QA", level: 60 },
-      { name: "Accessibility", level: 58 }
+      { name: "React & TypeScript", level: 78 },
+      { name: "Tailwind / CSS", level: 80 },
+      { name: "Design Systems", level: 76 },
+      { name: "Accessibility & QA", level: 72 },
+      { name: "Headless CMS Workflows", level: 70 }
     ],
     certifications: {
-      en: ["Internal UI Components Playbook"],
-      es: ["Playbook interno de componentes UI"]
+      en: ["Figma Design Systems Certification", "Internal UI Components Playbook"],
+      es: ["Certificación Figma Design Systems", "Playbook interno de componentes UI"]
     },
     languages: {
-      en: ["Spanish (Native)", "English (A2 • Basic)"],
-      es: ["Español (Nativo)", "Inglés (A2 • Básico)"]
+      en: ["Spanish (Native)", "English (B1 • Conversational)"],
+      es: ["Español (Nativo)", "Inglés (B1 • Conversacional)"]
     },
     linkedin: "https://linkedin.com/in/alex-rosero",
     github: "https://github.com/alex-rosero",
-    avatar: "/api/placeholder/300/300"
+  avatar: alexRoseroAvatar
   }
 ]
 
@@ -267,6 +326,7 @@ const projects: Project[] = [
     id: 'odooSuite',
     category: 'odoo',
     technologies: ['Odoo Manufacturing', 'PostgreSQL', 'Docker', 'CI/CD'],
+    tags: ['odoo', 'manufacturing', 'governance'],
     image: '/api/placeholder/600/400',
     link: 'https://github.com/robocode-team/odoo-manufacturing'
   },
@@ -274,6 +334,7 @@ const projects: Project[] = [
     id: 'integrationLayer',
     category: 'integrations',
     technologies: ['Odoo API', 'MuleSoft', 'Azure Service Bus', 'PostgreSQL'],
+    tags: ['integrations', 'finance', 'analytics'],
     image: '/api/placeholder/600/400',
     link: 'https://github.com/robocode-team/odoo-integrations'
   },
@@ -281,12 +342,14 @@ const projects: Project[] = [
     id: 'salesforceSri',
     category: 'integrations',
     technologies: ['Salesforce Apex', 'Salesforce Flow', 'SRI API', 'AWS Lambda'],
+    tags: ['salesforce', 'compliance', 'automation'],
     image: '/api/placeholder/600/400'
   },
   {
     id: 'automationBilling',
     category: 'automation',
     technologies: ['Odoo Accounting', 'Celery', 'Redis', 'Stripe'],
+    tags: ['automation', 'stripe', 'growth'],
     image: '/api/placeholder/600/400',
     link: 'https://github.com/robocode-team/odoo-automation'
   },
@@ -294,6 +357,7 @@ const projects: Project[] = [
     id: 'biInsights',
     category: 'bi',
     technologies: ['Odoo Data Lake', 'Power BI', 'Python', 'dbt'],
+    tags: ['analytics', 'decisionOps', 'odoo'],
     image: '/api/placeholder/600/400',
     link: 'https://github.com/robocode-team/odoo-bi-insights'
   }
@@ -306,7 +370,8 @@ const blogPosts: BlogPost[] = [
     excerpt: "Cómo diseñamos una arquitectura modular para conectar Odoo con servicios de logística, finanzas y BI sin detener la operación.",
     content: "Compartimos nuestro enfoque para extender Odoo más allá de sus capacidades estándar. Hablamos de colas de mensajes para procesos asíncronos, pruebas automáticas para cada integración y patrones de observabilidad que permiten detectar incidencias antes de que impacten al negocio.",
     author: "Equipo Robocode",
-    date: "2024-02-18",
+    date: "2024-02-17",
+    image: odooArticle,
     tags: ["Odoo", "Integraciones", "Arquitectura"]
   },
   {
@@ -315,7 +380,8 @@ const blogPosts: BlogPost[] = [
     excerpt: "Lecciones aprendidas construyendo flujos complejos con Apex, Lightning y orquestaciones que aceleran el ciclo comercial.",
     content: "Exploramos cómo modelar reglas de negocio en Salesforce sin sacrificar mantenibilidad. Cubrimos el uso de Apex para servicios críticos, la gobernanza de datos en integraciones externas y las métricas que seguimos para medir el impacto en ventas.",
     author: "Robocode Labs",
-    date: "2024-03-05",
+    date: "2024-03-04",
+    image: salesforceArticle,
     tags: ["Salesforce", "Automatización", "CRM"]
   },
   {
@@ -325,6 +391,7 @@ const blogPosts: BlogPost[] = [
     content: "Detallamos nuestra guía para crear front-ends empresariales: sistemas de diseño consistentes, microinteracciones que comunican estado y estrategias de performance que mantienen la fluidez incluso con datos complejos.",
     author: "Angelo Vera",
     date: "2024-04-10",
+    image: frontendArticle,
     tags: ["Frontend", "UX", "Performance"]
   }
 ]
@@ -335,12 +402,14 @@ function App(): React.JSX.Element {
   // Initialize state with proper error handling
   const [activeSection, setActiveSection] = useState<string>('home')
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory | 'all'>('all')
+  const [selectedTag, setSelectedTag] = useState<'all' | string>('all')
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
   const [selectedBlogPost, setSelectedBlogPost] = useState<BlogPost | null>(null)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [currentLanguage, setCurrentLanguage] = useState<string>(i18n.language)
   const [showAdmin, setShowAdmin] = useState<boolean>(false)
   const [scrolled, setScrolled] = useState<boolean>(false)
+  const [expandedMember, setExpandedMember] = useState<string | null>(null)
   
   // Initialize contact form with useKV hook
   const [contactForm, setContactForm] = useKV<ContactForm>('contact-form', {
@@ -409,8 +478,9 @@ function App(): React.JSX.Element {
   }
 
   const categories: Array<ProjectCategory | 'all'> = ['all', ...Array.from(new Set(projects.map(p => p.category)))]
+  const tagLabels = t('portfolio.tags', { returnObjects: true }) as Record<string, string>
+  const tagOptions: Array<'all' | string> = ['all', ...Array.from(new Set(projects.flatMap((project) => project.tags)))]
   const heroStats = ['implementation', 'savings', 'nps'] as const
-  const trustLogos = t('trust.logos', { returnObjects: true }) as string[]
   const trustTestimonial = t('trust.testimonial', { returnObjects: true }) as {
     quote: string
     author: string
@@ -418,6 +488,86 @@ function App(): React.JSX.Element {
     cta: string
   }
   const locale: LocaleKey = currentLanguage.startsWith('es') ? 'es' : 'en'
+  const processSteps = ['discovery', 'design', 'build', 'qa', 'support'] as const
+  const processMatched = t('process.matched', { returnObjects: true }) as {
+    title: string
+    description: string
+    bullets: string[]
+    cta: string
+  }
+  const resourcesItems = t('resources.items', { returnObjects: true }) as Record<string, {
+    title: string
+    description: string
+    action: string
+  }>
+  const resourceMeta: Record<string, {
+    icon: React.ElementType
+    badge: Record<LocaleKey, string>
+    gradient: string
+  }> = {
+    erpGuide: {
+      icon: StackSimple,
+      badge: {
+        en: 'ERP Guide',
+        es: 'Guía ERP'
+      },
+      gradient: 'from-[#c39bff] to-[#7ad7ff]'
+    },
+    salesforcePlaybook: {
+      icon: ChartLineUp,
+      badge: {
+        en: 'Salesforce Playbook',
+        es: 'Playbook Salesforce'
+      },
+      gradient: 'from-[#7ad7ff] to-[#5aa8ff]'
+    },
+    integrationChecklist: {
+      icon: ShieldCheck,
+      badge: {
+        en: 'Integration Checklist',
+        es: 'Checklist Integraciones'
+      },
+      gradient: 'from-[#8fd4ff] to-[#86e7b5]'
+    }
+  }
+  const resourceKeys = ['erpGuide', 'salesforcePlaybook', 'integrationChecklist']
+  const credentials = t('credentials', { returnObjects: true }) as {
+    title: string
+    subtitle: string
+    certificationsTitle: string
+    certifications: string[]
+    stackTitle: string
+    stack: string[]
+  }
+  const contactPromise = t('contact.promise', { returnObjects: true }) as {
+    title: string
+    description: string
+  }
+  const contactAvailability = t('contact.availability')
+  const contactChannels = t('contact.channels', { returnObjects: true }) as Record<string, string>
+  const contactEmail = t('contact.info.email')
+  const contactChannelMeta: Record<string, {
+    icon: React.ElementType
+    bg: string
+    text: string
+  }> = {
+    calendly: {
+      icon: Calendar,
+      bg: 'bg-[#e5f2ff]',
+      text: 'text-[#1f2a44]'
+    },
+    whatsapp: {
+      icon: WhatsappLogo,
+      bg: 'bg-[#dff9e6]',
+      text: 'text-[#1d7a4b]'
+    },
+    email: {
+      icon: Envelope,
+      bg: 'bg-[#efe1ff]',
+      text: 'text-[#4f3c7f]'
+    }
+  }
+  const contactChannelOrder = ['calendly', 'whatsapp', 'email']
 
   const navItems = [
     { key: 'home', label: t('nav.home') },
@@ -427,9 +577,11 @@ function App(): React.JSX.Element {
     { key: 'contact', label: t('nav.contact') }
   ]
 
-  const filteredProjects = selectedCategory === 'all'
-    ? projects
-    : projects.filter(project => project.category === selectedCategory)
+  const filteredProjects = projects.filter((project) => {
+    const matchesCategory = selectedCategory === 'all' || project.category === selectedCategory
+    const matchesTag = selectedTag === 'all' || project.tags.includes(selectedTag)
+    return matchesCategory && matchesTag
+  })
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -443,6 +595,60 @@ function App(): React.JSX.Element {
   const getCategoryLabel = (category: ProjectCategory | 'all') =>
     category === 'all' ? t('portfolio.all') : t(`portfolio.categories.${category}`)
 
+  const handleResourceAction = (resourceTitle: string) => {
+    toast.info(
+      locale === 'es'
+        ? `Te compartimos “${resourceTitle}” tras nuestra primera llamada.`
+        : `We’ll send “${resourceTitle}” right after our kickoff call.`
+    )
+    scrollToSection('contact')
+  }
+
+  const handleChannelClick = (channel: string) => {
+    const label = contactChannels[channel]
+    const preferenceLine = label
+      ? (locale === 'es' ? `Preferencia de canal: ${label}` : `Preferred channel: ${label}`)
+      : undefined
+
+    if (preferenceLine) {
+      setContactForm((prev: ContactForm | undefined) => {
+        const existingMessage = prev?.message ?? ''
+        const hasPreference = existingMessage.includes(preferenceLine)
+        return {
+          name: prev?.name ?? '',
+          email: prev?.email ?? '',
+          message: hasPreference
+            ? existingMessage
+            : `${existingMessage}${existingMessage ? '\n\n' : ''}${preferenceLine}`
+        }
+      })
+    }
+
+    if (channel === 'email') {
+      window.location.href = `mailto:${contactEmail}`
+      return
+    }
+
+    if (channel === 'whatsapp') {
+      const whatsappUrl = 'https://wa.me/5930998041670'
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
+      toast.success(
+        locale === 'es'
+          ? 'Abrimos WhatsApp para que conversemos al instante.'
+          : 'Opening WhatsApp so we can chat right away.'
+      )
+      return
+    }
+
+    if (channel === 'calendly') {
+      toast.info(
+        locale === 'es'
+          ? 'Confirmaremos tu disponibilidad y enviaremos el enlace de Calendly al responder.'
+          : 'We’ll confirm availability and share our Calendly link in the reply.'
+      )
+    }
+  }
+
   const getProjectCopy = (projectId: ProjectId) => {
     const baseKey = `portfolio.projects.${projectId}` as const
     const features = t(`${baseKey}.features`, { returnObjects: true }) as string[]
@@ -450,6 +656,7 @@ function App(): React.JSX.Element {
       stack: string[]
       duration: string
       impact: string
+      tags?: string[]
     }
 
     return {
@@ -491,7 +698,11 @@ function App(): React.JSX.Element {
                         : 'border border-[#e4d6c5] bg-white/80 backdrop-blur-md'
                     }`}
                   >
-                    <Code className={`h-5 w-5 ${scrolled ? 'text-white' : 'text-[#1f2a44]'}`} />
+                    <img
+                      src={logoMark}
+                      alt="Robocode logo mark"
+                      className="h-7 w-7 object-contain drop-shadow-sm"
+                    />
                   </div>
                   <div className="flex flex-col">
                     <span
@@ -658,13 +869,6 @@ function App(): React.JSX.Element {
 
           {/* Hero Section */}
           <section id="home" className="relative overflow-hidden bg-gradient-to-b from-white via-[#f6f8ff] to-[#eef7ff] pt-32 pb-24">
-            <div className="absolute inset-0 opacity-40">
-              <div className="absolute top-20 left-10 w-32 h-32 border border-[#e6d5c2] rounded-full animate-pulse"></div>
-              <div className="absolute top-40 right-20 w-20 h-20 border border-[#e6d5c2] rounded-lg rotate-45 animate-pulse delay-300"></div>
-              <div className="absolute bottom-40 left-1/4 w-16 h-16 border border-[#e6d5c2] rounded-full animate-pulse delay-700"></div>
-              <div className="absolute bottom-20 right-1/3 w-24 h-24 border border-[#e6d5c2] rounded-lg rotate-12 animate-pulse delay-500"></div>
-            </div>
-
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
               <div className="text-center">
                 <motion.div
@@ -674,7 +878,7 @@ function App(): React.JSX.Element {
                   className="mb-12"
                 >
                   <div className="w-24 h-24 bg-white rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-xl border border-[#e4d6c5]">
-                    <Code className="w-12 h-12 text-[#1f2a44]" />
+                    <img src={logoMark} alt="Robocode icon" className="w-16 h-16 object-contain" />
                   </div>
                   <h1 className="text-5xl md:text-7xl font-bold text-[#1f2a44] mb-6 leading-tight">
                     {t('home.heroTitle')} <br />
@@ -684,6 +888,9 @@ function App(): React.JSX.Element {
                   </h1>
                   <p className="text-xl md:text-2xl text-[#4d5b75] mb-4 max-w-4xl mx-auto">
                     {t('home.heroDescription')}
+                  </p>
+                  <p className="text-lg md:text-xl text-[#3a4a64] mb-6 max-w-3xl mx-auto">
+                    {t('home.heroSubheadline')}
                   </p>
                   <p className="text-base md:text-lg text-[#6f7b91] mb-10 max-w-3xl mx-auto">
                     {t('home.motto')}
@@ -716,6 +923,38 @@ function App(): React.JSX.Element {
                   transition={{ duration: 0.8, delay: 0.3 }}
                   className="mb-10"
                 >
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <div className="flex flex-col gap-3 rounded-2xl border border-[#cae6ff] bg-white/85 px-6 py-6 text-left shadow-[0_18px_40px_-30px_rgba(90,160,220,0.6)]">
+                      <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#7ad7ff] to-[#8fceff] text-[#041021]">
+                        <Clock className="h-5 w-5" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-[#1f2a44]">
+                        {t('home.promise.title')}
+                      </h3>
+                      <p className="text-sm md:text-base text-[#4d5b75]">
+                        {t('home.promise.description')}
+                      </p>
+                    </div>
+                    <div className="flex flex-col gap-3 rounded-2xl border border-[#d8c7ff] bg-white/85 px-6 py-6 text-left shadow-[0_18px_40px_-30px_rgba(129,108,255,0.45)]">
+                      <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#c39bff] to-[#8f7dff] text-white">
+                        <CheckCircle className="h-5 w-5" weight="fill" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-[#1f2a44]">
+                        {t('home.guarantee.title')}
+                      </h3>
+                      <p className="text-sm md:text-base text-[#4d5b75]">
+                        {t('home.guarantee.description')}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  className="mb-10"
+                >
                   <p className="text-sm text-[#6f7b91] uppercase tracking-wide mb-4">{t('home.specializedIn')}</p>
                   <div className="flex flex-wrap justify-center gap-3">
                     <Badge variant="outline" className="px-4 py-2 text-sm font-medium border-[#e3d5c3] text-[#1f2a44] hover:bg-white">
@@ -736,24 +975,24 @@ function App(): React.JSX.Element {
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
                   className="flex flex-col sm:flex-row gap-4 justify-center"
                 >
                   <Button
-                    onClick={() => scrollToSection('portfolio')}
+                    onClick={() => scrollToSection('contact')}
                     className="bg-[#1f2a44] text-white hover:bg-[#142037] px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all"
                     size="lg"
                   >
-                    {t('home.viewWork')}
+                    {t('home.ctaPrimary')}
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                   <Button
                     variant="outline"
-                    onClick={() => scrollToSection('contact')}
+                    onClick={() => scrollToSection('portfolio')}
                     className="px-8 py-4 text-lg font-medium border-2 border-[#e0d2c1] text-[#1f2a44] hover:bg-white hover:border-[#d4c4b1] transition-all backdrop-blur-sm"
                     size="lg"
                   >
-                    {t('home.getQuote')}
+                    {t('home.ctaSecondary')}
                   </Button>
                 </motion.div>
               </div>
@@ -819,17 +1058,29 @@ function App(): React.JSX.Element {
               viewport={{ once: true }}
               className="bg-white/70 backdrop-blur-md rounded-2xl p-8 border border-[#d4c4b1]/60 shadow-sm"
             >
-              <h3 className="text-center text-lg font-semibold text-[#4f5a76] mb-8 uppercase tracking-wide">
-                {t('trust.clients')}
-              </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 items-center">
-                {trustLogos.map((client) => (
+              <div className="text-center mb-8">
+                <h3 className="text-lg font-semibold text-[#4f5a76] uppercase tracking-wide">
+                  {t('trust.clients')}
+                </h3>
+                <p className="mt-3 text-sm text-[#6b728e] max-w-2xl mx-auto">
+                  {t('trust.clientsSubtitle')}
+                </p>
+              </div>
+              <div
+                role="list"
+                aria-label={t('trust.clientsAria')}
+                className="grid gap-4 py-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center"
+              >
+                {clientBrands.map((client) => (
                   <div
-                    key={client}
-                    className="h-14 rounded-xl border border-[#d4c4b1]/40 bg-gradient-to-br from-white to-[#f5f9ff] flex items-center justify-center text-center px-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                    key={client.id}
+                    role="listitem"
+                    className="h-16 w-full max-w-[220px] rounded-full border border-white/60 bg-white/70 backdrop-blur-md flex items-center justify-center px-8 shadow-sm"
                   >
-                    <span className="text-sm md:text-base font-semibold text-[#1f2a44] tracking-wide">
-                      {client}
+                    <span
+                      className={`inline-flex items-center justify-center rounded-full bg-gradient-to-br ${client.gradient} px-6 py-2 text-sm font-semibold uppercase tracking-[0.2em] text-center ${client.textColor}`}
+                    >
+                      {client.name}
                     </span>
                   </div>
                 ))}
@@ -888,138 +1139,185 @@ function App(): React.JSX.Element {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Card className="h-full border border-[#e3d8c9] bg-white/85 backdrop-blur-sm shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
-                  <CardContent className="p-6">
-                    <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-[#f2ebe0] shadow-inner">
-                      <Users className="w-10 h-10 text-[#6c7a97]" />
-                    </div>
-                    <div className="text-center">
-                      <h3 className="text-lg font-semibold text-[#1f2a44] mb-1">
-                        {member.name}
-                      </h3>
-                      <p className="text-[#365d9c] font-medium">
-                        {member.role}
-                      </p>
-                      <p className="text-xs uppercase tracking-[0.2em] text-[#8891a6] mt-2">
-                        {locale === 'es' ? `${member.years}+ años de experiencia` : `${member.years}+ years of experience`}
-                      </p>
-                    </div>
+            {teamMembers.map((member, index) => {
+              const isExpanded = expandedMember === member.name
+              const toggleExpansion = () =>
+                setExpandedMember((current) => (current === member.name ? null : member.name))
 
-                    <p className="mt-4 text-sm text-[#365d9c] font-semibold text-center">
-                      {member.focus[locale]}
-                    </p>
-                    <p className="mt-2 text-sm text-[#4f5a76] text-center">
-                      {member.summary[locale]}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2 justify-center mt-4">
-                      {member.skills.map((skill) => (
-                        <Badge
-                          key={`${member.name}-${skill}`}
-                          variant="secondary"
-                          className="text-xs border-0 bg-[#e9f0ff] text-[#1f2a44] shadow-sm"
-                        >
-                          {skill}
-                        </Badge>
-                      ))}
+              return (
+                <motion.div
+                  key={member.name}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <Card
+                    className={`group h-full cursor-pointer border border-[#d2e1ff] bg-white/90 backdrop-blur-sm shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${
+                      isExpanded ? 'ring-2 ring-[#7ad7ff]' : ''
+                    }`}
+                    onClick={toggleExpansion}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault()
+                        toggleExpansion()
+                      }
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    aria-expanded={isExpanded}
+                  >
+                    <CardContent className="p-0 overflow-hidden">
+                    <div className="relative h-60 w-full overflow-hidden">
+                      <img
+                        src={member.avatar}
+                        alt={member.name}
+                        className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
                     </div>
 
-                    <Separator className="my-4" />
-
-                    <div className="space-y-3 text-left">
-                      <h4 className="text-sm font-semibold text-[#1f2a44] uppercase tracking-wide">
-                        {locale === 'es' ? 'Experiencia' : 'Experience'}
-                      </h4>
-                      <div className="space-y-2">
-                        {member.experiences[locale].map((item) => (
-                          <div key={`${member.name}-${item}`} className="flex items-start gap-2 text-xs text-[#4f5a76]">
-                            <Briefcase className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                            <span>{item}</span>
-                          </div>
-                        ))}
+                    <div className="p-6 pt-6">
+                      <div className="text-center">
+                        <div className="flex items-center justify-center gap-1 text-xs uppercase tracking-[0.22em] text-[#6d7e9f]">
+                          <span>{locale === 'es' ? `${member.years}+ años de experiencia` : `${member.years}+ years`}</span>
+                          <span className="text-[#b0b9cc]">•</span>
+                          <span>{locale === 'es' ? 'Equipo Robocode' : 'Robocode Team'}</span>
+                        </div>
+                        <h3 className="mt-3 text-xl font-semibold text-[#172037]">
+                          {member.name}
+                        </h3>
+                        <p className="text-[#2f5ab8] font-medium text-sm">
+                          {member.role}
+                        </p>
                       </div>
-                    </div>
 
-                    <div className="mt-4 space-y-3 text-left">
-                      <h4 className="text-sm font-semibold text-[#1f2a44] uppercase tracking-wide">
-                        Skills
-                      </h4>
-                      <div className="space-y-3">
-                        {member.skillBars.map((skill) => (
-                          <div key={`${member.name}-${skill.name}`}>
-                            <div className="flex items-center justify-between text-[11px] text-[#4f5a76] mb-1">
-                              <span>{skill.name}</span>
-                              <span>{skill.level}%</span>
-                            </div>
-                            <Progress value={skill.level} className="bg-[#e9f0ff]" />
-                          </div>
-                        ))}
+                      <p className="mt-4 text-sm text-[#1d3f7b] font-semibold text-center">
+                        {member.focus[locale]}
+                      </p>
+                      <p className="mt-2 text-sm text-[#4f5a76] text-center">
+                        {member.summary[locale]}
+                      </p>
+
+                      <div className="mt-3 flex justify-center">
+                        <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#5870a3]">
+                          {isExpanded
+                            ? locale === 'es'
+                              ? 'Ocultar detalles'
+                              : 'Hide details'
+                            : locale === 'es'
+                              ? 'Ver perfil completo'
+                              : 'View full profile'}
+                          <CaretDown
+                            className={`h-4 w-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                          />
+                        </span>
                       </div>
-                    </div>
 
-                    <Separator className="my-4" />
-
-                    <div className="grid gap-4 text-left text-xs text-[#4f5a76]">
-                      <div>
-                        <h4 className="text-sm font-semibold text-[#1f2a44] uppercase tracking-wide mb-2">
-                          {locale === 'es' ? 'Certificados' : 'Certificates'}
-                        </h4>
-                        <div className="space-y-1">
-                          {member.certifications[locale].map((cert) => (
-                            <div key={`${member.name}-${cert}`} className="flex items-start gap-2">
-                              <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                              <span>{cert}</span>
-                            </div>
+                      <div className="mt-4">
+                        <div className="flex flex-wrap gap-2 justify-center">
+                          {member.skills.map((skill) => (
+                            <Badge
+                              key={`${member.name}-${skill}`}
+                              variant="outline"
+                              className="rounded-full border border-[#dcd0ef] bg-white text-[#4f3c7f] text-xs font-medium px-3 py-1"
+                            >
+                              {skill}
+                            </Badge>
                           ))}
                         </div>
                       </div>
-                      <div>
-                        <h4 className="text-sm font-semibold text-[#1f2a44] uppercase tracking-wide mb-2">
-                          {locale === 'es' ? 'Idiomas' : 'Languages'}
-                        </h4>
-                        <div className="space-y-1">
-                          {member.languages[locale].map((lang) => (
-                            <div key={`${member.name}-${lang}`} className="flex items-start gap-2">
-                              <Globe className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                              <span>{lang}</span>
+
+                      <div className={`grid gap-4 text-left text-xs text-[#4f5a76] transition-all duration-500 ${
+                        isExpanded ? 'max-h-[1200px] opacity-100 mt-6' : 'max-h-0 opacity-0 mt-0 overflow-hidden'
+                      }`}>
+                        <div>
+                          <h4 className="text-sm font-semibold text-[#1f2a44] uppercase tracking-wide mb-2">
+                            {locale === 'es' ? 'Experiencia' : 'Experience'}
+                          </h4>
+                          <div className="space-y-2">
+                            {member.experiences[locale].map((item) => (
+                              <div key={`${member.name}-${item}`} className="flex items-start gap-2 text-xs text-[#4f5a76]">
+                                <Briefcase className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                                <span>{item}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div>
+                          <h4 className="text-sm font-semibold text-[#1f2a44] uppercase tracking-wide mb-2">
+                            Skills
+                          </h4>
+                          <div className="space-y-3">
+                            {member.skillBars.map((skill) => (
+                              <div key={`${member.name}-${skill.name}`}>
+                                <div className="flex items-center justify-between text-[11px] text-[#4f5a76] mb-1">
+                                  <span>{skill.name}</span>
+                                  <span>{skill.level}%</span>
+                                </div>
+                                <Progress value={skill.level} className="bg-[#e9f0ff]" />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="grid gap-4 text-left text-xs text-[#4f5a76]">
+                          <div>
+                            <h4 className="text-sm font-semibold text-[#1f2a44] uppercase tracking-wide mb-2">
+                              {locale === 'es' ? 'Certificados' : 'Certificates'}
+                            </h4>
+                            <div className="space-y-1">
+                              {member.certifications[locale].map((cert) => (
+                                <div key={`${member.name}-${cert}`} className="flex items-start gap-2">
+                                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                                  <span>{cert}</span>
+                                </div>
+                              ))}
                             </div>
-                          ))}
+                          </div>
+                          <div>
+                            <h4 className="text-sm font-semibold text-[#1f2a44] uppercase tracking-wide mb-2">
+                              {locale === 'es' ? 'Idiomas' : 'Languages'}
+                            </h4>
+                            <div className="space-y-1">
+                              {member.languages[locale].map((lang) => (
+                                <div key={`${member.name}-${lang}`} className="flex items-start gap-2">
+                                  <Globe className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                                  <span>{lang}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-center space-x-3 pt-2">
+                          <a
+                            href={member.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#365d9c] hover:text-[#1f2a44] transition-colors"
+                            onClick={(event) => event.stopPropagation()}
+                          >
+                            <LinkedinLogo size={20} />
+                          </a>
+                          <a
+                            href={member.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#365d9c] hover:text-[#1f2a44] transition-colors"
+                            onClick={(event) => event.stopPropagation()}
+                          >
+                            <GithubLogo size={20} />
+                          </a>
                         </div>
                       </div>
                     </div>
-
-                    <Separator className="my-4" />
-
-                    <div className="flex justify-center space-x-3">
-                      <a
-                        href={member.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 text-[#4f5a76] hover:text-[#365d9c] transition-colors"
-                      >
-                        <LinkedinLogo size={20} />
-                      </a>
-                      <a
-                        href={member.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 text-[#4f5a76] hover:text-[#365d9c] transition-colors"
-                      >
-                        <GithubLogo size={20} />
-                      </a>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -1190,47 +1488,142 @@ function App(): React.JSX.Element {
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  step: "01",
-                  key: "strategy"
-                },
-                {
-                  step: "02", 
-                  key: "design"
-                },
-                {
-                  step: "03",
-                  key: "development"
-                }
-              ].map((process, index) => (
-                <motion.div
-                  key={process.step}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                  className="text-center"
-                >
-                  <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-bold">
-                    {process.step}
-                  </div>
-                  <h4 className="text-xl font-bold text-[#1f2a44] mb-2">
-                    {t(`process.steps.${process.key}.title`)}
-                  </h4>
-                  <p className="text-[#4f5a76]">
-                    {t(`process.steps.${process.key}.description`)}
-                  </p>
-                  {index < 2 && (
-                    <div className="hidden md:block absolute top-8 left-full w-8 h-px bg-primary/30 transform translate-x-4"></div>
-                  )}
-                </motion.div>
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-8">
+              {processSteps.map((stepKey, index) => {
+                const stepNumber = String(index + 1).padStart(2, '0')
+                return (
+                  <motion.div
+                    key={stepKey}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.15 }}
+                    viewport={{ once: true }}
+                    className="relative flex flex-col items-center rounded-3xl border border-[#dfe7f7] bg-white/80 px-6 py-8 shadow-[0_18px_40px_-32px_rgba(80,120,180,0.55)]"
+                  >
+                    <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#7ad7ff] via-[#8fd4ff] to-[#c39bff] text-lg font-bold text-[#041021]">
+                      {stepNumber}
+                    </div>
+                    <h4 className="text-lg font-semibold text-[#1f2a44] mb-2 text-center">
+                      {t(`process.steps.${stepKey}.title`)}
+                    </h4>
+                    <p className="text-sm text-[#4f5a76] text-center">
+                      {t(`process.steps.${stepKey}.description`)}
+                    </p>
+                  </motion.div>
+                )
+              })}
             </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="mt-16 max-w-5xl mx-auto"
+            >
+              <div className="rounded-3xl border border-[#dcd0ef] bg-gradient-to-br from-white/90 via-[#f6f1ff]/90 to-[#eef7ff]/90 p-8 shadow-[0_25px_60px_-40px_rgba(82,60,140,0.6)]">
+                <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+                  <div className="max-w-2xl">
+                    <h3 className="text-2xl font-semibold text-[#1f2a44] mb-3">
+                      {processMatched.title}
+                    </h3>
+                    <p className="text-[#4f5a76] mb-4">
+                      {processMatched.description}
+                    </p>
+                    <ul className="space-y-3">
+                      {processMatched.bullets.map((bullet, idx) => (
+                        <li key={bullet} className="flex items-start gap-3 text-sm text-[#324261]">
+                          <CheckCircle className="mt-1 h-4 w-4 text-[#6d8bff]" />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="flex flex-col gap-4">
+                    <Button
+                      className="rounded-full bg-[#1f2a44] px-6 py-3 text-sm font-semibold text-white shadow-lg hover:bg-[#142037]"
+                      onClick={() => scrollToSection('portfolio')}
+                    >
+                      {processMatched.cta}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
+
+          {/* Credentials Section */}
+          <section className="py-20 bg-gradient-to-b from-[#fbfaff] via-[#eef7ff] to-[#e6f5ff]">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="text-center mb-16"
+              >
+                <h2 className="text-3xl md:text-4xl font-bold text-[#1f2a44] mb-4">
+                  {t('credentials.title')} <span className="text-[#365d9c]">{t('credentials.subtitle')}</span>
+                </h2>
+              </motion.div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <Card className="h-full border border-[#d8d4ff] bg-white/85 backdrop-blur-sm shadow-md">
+                    <CardContent className="p-8">
+                      <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#8fd4ff] to-[#c39bff] text-white">
+                        <ShieldCheck className="h-6 w-6" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-[#1f2a44] mb-4">
+                        {t('credentials.certificationsTitle')}
+                      </h3>
+                      <ul className="space-y-3 text-left">
+                        {credentials.certifications.map((cert) => (
+                          <li key={cert} className="flex items-start gap-3 text-sm text-[#4f5a76]">
+                            <CheckCircle className="mt-0.5 h-4 w-4 text-[#6d8bff]" />
+                            <span>{cert}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  viewport={{ once: true }}
+                >
+                  <Card className="h-full border border-[#c9e9ff] bg-white/85 backdrop-blur-sm shadow-md">
+                    <CardContent className="p-8">
+                      <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#7ad7ff] to-[#5aa8ff] text-[#041021]">
+                        <StackSimple className="h-6 w-6" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-[#1f2a44] mb-4">
+                        {t('credentials.stackTitle')}
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {credentials.stack.map((tech) => (
+                          <Badge key={tech} className="rounded-full border border-[#d4e8ff] bg-[#f2f8ff] px-4 py-2 text-xs font-medium text-[#1f2a44]">
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </div>
+            </div>
+          </section>
 
       {/* Portfolio Section */}
   <section id="portfolio" className="py-20 bg-gradient-to-b from-white via-[#f7f2ff] to-[#efe9ff]">
@@ -1249,18 +1642,61 @@ function App(): React.JSX.Element {
               {t('portfolio.subtitle')}
             </p>
 
-            {/* Category Filter */}
-            <div className="flex flex-wrap justify-center gap-4">
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant={selectedCategory === category ? 'default' : 'outline'}
-                  onClick={() => setSelectedCategory(category)}
-                  className={selectedCategory === category ? 'bg-primary text-primary-foreground' : ''}
-                >
-                  {getCategoryLabel(category)}
-                </Button>
-              ))}
+            {/* Filters */}
+            <div className="mt-6 space-y-6">
+              <div>
+                <p className="text-sm font-medium uppercase tracking-wide text-[#6f7b91] mb-3">
+                  {t('portfolio.filters.categories')}
+                </p>
+                <div className="flex flex-wrap justify-center gap-3">
+                  {categories.map((category) => (
+                    <Button
+                      key={category}
+                      variant={selectedCategory === category ? 'default' : 'outline'}
+                      onClick={() => {
+                        setSelectedCategory(category)
+                        if (selectedTag !== 'all') {
+                          setSelectedTag('all')
+                        }
+                      }}
+                      className={selectedCategory === category ? 'bg-primary text-primary-foreground' : ''}
+                    >
+                      {getCategoryLabel(category)}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p className="text-sm font-medium uppercase tracking-wide text-[#6f7b91] mb-3">
+                  {t('portfolio.filters.tags')}
+                </p>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {tagOptions.map((tag) => {
+                    const isActive = selectedTag === tag
+                    const label = tag === 'all' ? t('portfolio.all') : tagLabels?.[tag] ?? tag
+                    return (
+                      <Button
+                        key={tag}
+                        variant={isActive ? 'secondary' : 'ghost'}
+                        onClick={() => {
+                          if (tag === 'all') {
+                            setSelectedTag('all')
+                            return
+                          }
+                          setSelectedTag((prev) => (prev === tag ? 'all' : tag))
+                        }}
+                        className={`rounded-full border ${
+                          isActive
+                            ? 'border-[#c39bff] bg-[#efe1ff] text-[#3c2a66]'
+                            : 'border-transparent text-[#4f5a76] hover:border-[#dcd0ef] hover:bg-white'
+                        } text-sm font-medium px-4 py-2`}
+                      >
+                        {label}
+                      </Button>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
           </motion.div>
 
@@ -1302,7 +1738,14 @@ function App(): React.JSX.Element {
                             </Badge>
                           ))}
                         </div>
-                        <div className="flex flex-wrap items-center justify-center gap-4 text-sm font-semibold">
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {project.tags.map((tagKey) => (
+                            <Badge key={`${project.id}-${tagKey}`} variant="outline" className="text-xs border border-[#dcd0ef] bg-white/70 text-[#4f3c7f]">
+                              {tagLabels?.[tagKey] ?? tagKey}
+                            </Badge>
+                          ))}
+                        </div>
+                        <div className="flex flex-wrap items-center justify-between gap-4 text-sm font-semibold">
                           <div className="flex items-center gap-2 text-[#365d9c]">
                             <Clock className="w-4 h-4" />
                             {projectCopy.meta.duration}
@@ -1312,6 +1755,17 @@ function App(): React.JSX.Element {
                             {projectCopy.meta.impact}
                           </div>
                         </div>
+                        <Button
+                          variant="outline"
+                          className="mt-6 w-full border border-[#dcd0ef] bg-white/70 text-[#1f2a44] hover:bg-[#f4f0ff]"
+                          onClick={(event) => {
+                            event.stopPropagation()
+                            scrollToSection('contact')
+                          }}
+                        >
+                          {t('portfolio.ctaCard')}
+                          <ArrowRight className="ml-2 w-4 h-4" />
+                        </Button>
                       </CardContent>
                     </Card>
                   </motion.div>
@@ -1445,6 +1899,77 @@ function App(): React.JSX.Element {
         </DialogContent>
       </Dialog>
 
+      {/* Resources Section */}
+      <section id="resources" className="py-20 bg-gradient-to-b from-[#f9f7fd] via-[#eef7ff] to-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-[#1f2a44] mb-4">
+              {t('resources.title')}
+            </h2>
+            <p className="text-lg text-[#4f5a76] max-w-2xl mx-auto">
+              {t('resources.subtitle')}
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {resourceKeys.map((key, index) => {
+              const item = resourcesItems[key]
+              if (!item) {
+                return null
+              }
+
+              const meta = resourceMeta[key]
+              const Icon = (meta?.icon ?? DownloadSimple) as React.ElementType
+              const badgeLabel = meta?.badge?.[locale] ?? (locale === 'es' ? 'Recurso' : 'Resource')
+              const gradient = meta?.gradient ?? 'from-[#dcd0ef] to-[#7ad7ff]'
+
+              return (
+                <motion.div
+                  key={key}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <Card className="h-full border border-[#dcd0ef] bg-white/85 backdrop-blur-sm shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+                    <CardContent className="p-8 flex h-full flex-col gap-6">
+                      <div className={`inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${gradient} text-white shadow-lg`}>
+                        <Icon className="h-6 w-6" />
+                      </div>
+                      <div className="space-y-3 text-left">
+                        <Badge className="border-0 bg-[#efe1ff] text-[#4f3c7f]">
+                          {badgeLabel}
+                        </Badge>
+                        <h3 className="text-xl font-semibold text-[#1f2a44]">
+                          {item.title}
+                        </h3>
+                        <p className="text-sm text-[#4f5a76] leading-relaxed">
+                          {item.description}
+                        </p>
+                      </div>
+                      <Button
+                        variant="outline"
+                        className="mt-auto w-full border border-[#dcd0ef] bg-white/70 text-[#1f2a44] hover:bg-[#f4f0ff]"
+                        onClick={() => handleResourceAction(item.title)}
+                      >
+                        <DownloadSimple className="mr-2 h-4 w-4" />
+                        {item.action}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Blog Section */}
   <section id="blog" className="py-20 bg-gradient-to-b from-[#efe9ff] via-[#f9f7fd] to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1483,8 +2008,17 @@ function App(): React.JSX.Element {
                 <Card className="border border-[#d8d3e8] bg-white/90 backdrop-blur-sm shadow-sm">
                   <CardContent className="p-8">
                     <div className="mb-6">
-                      <div className="w-full h-64 rounded-lg mb-6 flex items-center justify-center bg-gradient-to-br from-[#eef2ff] to-[#f9f5ff]">
-                        <Article className="w-16 h-16 text-[#6c7a97]" />
+                      <div className="w-full h-64 rounded-lg mb-6 overflow-hidden bg-gradient-to-br from-[#eef2ff] to-[#f9f5ff] flex items-center justify-center">
+                        {selectedBlogPost.image ? (
+                          <img
+                            src={selectedBlogPost.image}
+                            alt={selectedBlogPost.title}
+                            className="h-full w-full object-cover"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <Article className="w-16 h-16 text-[#6c7a97]" />
+                        )}
                       </div>
                       <h1 className="text-3xl font-bold text-[#1f2a44] mb-4">
                         {selectedBlogPost.title}
@@ -1529,8 +2063,17 @@ function App(): React.JSX.Element {
                 >
                   <Card className="h-full cursor-pointer border border-[#d8d3e8] bg-white/85 backdrop-blur-sm shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
                     <CardContent className="p-0">
-                      <div className="w-full h-48 rounded-t-lg flex items-center justify-center bg-gradient-to-br from-[#eef2ff] to-[#f6f0ff]">
-                        <Article className="w-12 h-12 text-[#6c7a97]" />
+                      <div className="w-full h-48 rounded-t-lg overflow-hidden bg-gradient-to-br from-[#eef2ff] to-[#f6f0ff] flex items-center justify-center">
+                        {post.image ? (
+                          <img
+                            src={post.image}
+                            alt={post.title}
+                            className="h-full w-full object-cover"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <Article className="w-12 h-12 text-[#6c7a97]" />
+                        )}
                       </div>
                       <div className="p-6">
                         <div className="flex items-center gap-2 text-sm text-[#6f7b91] mb-2">
@@ -1588,6 +2131,55 @@ function App(): React.JSX.Element {
               {t('contact.subtitle')}
             </p>
           </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="md:col-span-2"
+            >
+              <Card className="h-full border border-[#c9e9ff] bg-white/80 backdrop-blur-sm shadow-sm">
+                <CardContent className="p-6 flex flex-col gap-4 md:flex-row md:items-start">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#dff3ff] text-[#1f2a44]">
+                    <Clock className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-[#1f2a44] mb-2">
+                      {contactPromise.title}
+                    </h3>
+                    <p className="text-sm text-[#4f5a76] leading-relaxed">
+                      {contactPromise.description}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+            >
+              <Card className="h-full border border-[#d8d3e8] bg-white/80 backdrop-blur-sm shadow-sm">
+                <CardContent className="p-6 flex items-start gap-4">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#efe1ff] text-[#4f3c7f]">
+                    <Globe className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-[#1f2a44] mb-2">
+                      {locale === 'es' ? 'Cobertura horaria' : 'Timezone coverage'}
+                    </h3>
+                    <p className="text-sm text-[#4f5a76] leading-relaxed">
+                      {contactAvailability}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Contact Form */}
@@ -1693,6 +2285,42 @@ function App(): React.JSX.Element {
                     <CheckCircle className="w-4 h-4 text-primary" />
                     <span className="text-sm text-[#4f5a76]">{t('contact.expertise.items.enterprise')}</span>
                   </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h3 className="text-xl font-semibold text-[#1f2a44] mb-4">
+                  {locale === 'es' ? 'Canales directos' : 'Direct channels'}
+                </h3>
+                <div className="space-y-3">
+                  {contactChannelOrder.map((channelKey) => {
+                    const label = contactChannels[channelKey]
+                    if (!label) {
+                      return null
+                    }
+
+                    const meta = contactChannelMeta[channelKey] ?? contactChannelMeta.email
+                    const Icon = (meta.icon ?? ArrowRight) as React.ElementType
+
+                    return (
+                      <Button
+                        key={channelKey}
+                        variant="outline"
+                        className="w-full justify-between border border-[#dcd0ef] bg-white/70 text-[#1f2a44] hover:bg-[#f4f0ff]"
+                        onClick={() => handleChannelClick(channelKey)}
+                      >
+                        <span className="flex items-center gap-3">
+                          <span className={`inline-flex h-9 w-9 items-center justify-center rounded-full ${meta.bg}`}>
+                            <Icon className={`h-5 w-5 ${meta.text}`} />
+                          </span>
+                          {label}
+                        </span>
+                        <ArrowRight className="h-4 w-4 text-[#365d9c]" />
+                      </Button>
+                    )
+                  })}
                 </div>
               </div>
             </motion.div>

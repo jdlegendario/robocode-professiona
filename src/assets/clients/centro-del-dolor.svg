@@ -1,0 +1,20 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title>Centro del Dolor Dr. Roberto Bobadilla</title>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff6b6b" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+    <linearGradient id="spine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#e5e7eb" stop-opacity="0.9" />
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="96" fill="url(#bg)" />
+  <g transform="translate(75 40)">
+    <rect x="18" y="0" width="14" height="120" rx="7" fill="url(#spine)" />
+    <path d="M25 14 C18 18 18 30 25 34 C32 38 32 50 25 54 C18 58 18 70 25 74 C32 78 32 90 25 94 C18 98 18 110 25 114" stroke="#7c3aed" stroke-width="6" stroke-linecap="round" fill="none" />
+    <path d="M25 -6 L25 126" stroke="#312e81" stroke-linecap="round" stroke-width="4" opacity="0.25" />
+  </g>
+  <text x="100" y="170" text-anchor="middle" font-family="'Poppins', 'Segoe UI', sans-serif" font-weight="600" font-size="18" fill="#fff">Centro del Dolor</text>
+</svg>

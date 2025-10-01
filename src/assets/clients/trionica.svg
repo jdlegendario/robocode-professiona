@@ -1,0 +1,19 @@
+<svg width="220" height="120" viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title>Trionica</title>
+  <defs>
+    <linearGradient id="purple" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c084fc" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+  </defs>
+  <rect width="220" height="120" rx="28" fill="#0f172a" />
+  <g transform="translate(34 24)">
+    <path d="M24 18 L56 72 L-8 72 Z" fill="#312e81" opacity="0.45" />
+    <path d="M84 0 L116 54 L52 54 Z" fill="url(#purple)" />
+    <circle cx="84" cy="30" r="10" fill="#f3e8ff" />
+    <circle cx="60" cy="72" r="6" fill="#f3e8ff" opacity="0.6" />
+    <circle cx="104" cy="72" r="6" fill="#f3e8ff" opacity="0.6" />
+  </g>
+  <text x="128" y="72" font-family="'Poppins', 'Segoe UI', sans-serif" font-weight="600" font-size="32" fill="#d8b4fe">Trionica</text>
+  <text x="128" y="94" font-family="'Poppins', 'Segoe UI', sans-serif" font-weight="400" font-size="14" fill="#818cf8">Cloud ERP &amp; Odoo Experts</text>
+</svg>

@@ -1,0 +1,21 @@
+<svg width="220" height="120" viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title>Quality Médico</title>
+  <defs>
+    <linearGradient id="teal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#14b8a6" />
+      <stop offset="100%" stop-color="#0f766e" />
+    </linearGradient>
+    <linearGradient id="cross" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ecfeff" />
+      <stop offset="100%" stop-color="#ccfbf1" />
+    </linearGradient>
+  </defs>
+  <rect width="220" height="120" rx="28" fill="#022c22" />
+  <g transform="translate(36 20)">
+    <rect x="0" y="0" width="80" height="80" rx="24" fill="url(#teal)" />
+    <path d="M40 14 L40 34 L60 34 L60 46 L40 46 L40 66 L28 66 L28 46 L8 46 L8 34 L28 34 L28 14 Z" fill="url(#cross)" />
+    <circle cx="64" cy="60" r="10" fill="#0f766e" opacity="0.35" />
+  </g>
+  <text x="130" y="66" font-family="'Poppins', 'Segoe UI', sans-serif" font-weight="600" font-size="28" fill="#34d399">Quality</text>
+  <text x="130" y="94" font-family="'Poppins', 'Segoe UI', sans-serif" font-weight="500" font-size="24" fill="#a7f3d0">Médico</text>
+</svg>

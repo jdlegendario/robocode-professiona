@@ -1,0 +1,21 @@
+<svg width="220" height="160" viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title>Empanadas Moby Dick</title>
+  <defs>
+    <linearGradient id="dough" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+    <linearGradient id="coffee" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4b5563" />
+      <stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="220" height="160" rx="24" fill="#431407" />
+  <g transform="translate(24 32)">
+    <path d="M64 48 C84 16 132 16 152 48 C164 66 156 92 132 100 C108 108 72 108 48 100 C24 92 12 64 24 46 C36 28 48 36 64 48 Z" fill="url(#dough)" stroke="#fbbf24" stroke-width="4" />
+    <circle cx="156" cy="68" r="18" fill="url(#coffee)" stroke="#fef3c7" stroke-width="4" />
+    <path d="M34 78 Q74 92 118 78" stroke="#78350f" stroke-width="6" stroke-linecap="round" opacity="0.35" />
+  </g>
+  <text x="110" y="118" text-anchor="middle" font-family="'Great Vibes', 'Segoe Script', cursive" font-size="32" fill="#fef3c7">Moby Dick</text>
+  <text x="110" y="140" text-anchor="middle" font-family="'Poppins', 'Segoe UI', sans-serif" font-size="12" letter-spacing="4" fill="#fde68a">EMPANADAS</text>
+</svg>

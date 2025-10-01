@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Separator } from '@/components/ui/separator'
+import { Progress } from '@/components/ui/progress'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { 
   Code, 
@@ -54,11 +55,24 @@ interface ContactForm {
   message: string
 }
 
+type LocaleKey = 'en' | 'es'
+
+interface SkillBar {
+  name: string
+  level: number
+}
+
 interface TeamMember {
   name: string
   role: string
+  years: number
+  focus: Record<LocaleKey, string>
+  summary: Record<LocaleKey, string>
+  experiences: Record<LocaleKey, string[]>
   skills: string[]
-  experience: string
+  skillBars: SkillBar[]
+  certifications: Record<LocaleKey, string[]>
+  languages: Record<LocaleKey, string[]>
   linkedin: string
   github: string
   avatar: string
@@ -77,39 +91,173 @@ interface Project {
 
 const teamMembers: TeamMember[] = [
   {
+    name: "Juan Diego Salazar Vivas",
+    role: "Odoo Developer & Full Stack",
+    years: 4,
+    focus: {
+      en: "Secure Odoo 16 customisations with zero-trust finance workflows",
+      es: "Personalizaciones Odoo 16 seguras con flujos financieros zero-trust"
+    },
+    summary: {
+      en: "Designs Odoo modules covering zero trust access, Ecuadorian tax compliance, and responsive UIs while coaching business users.",
+      es: "Diseña módulos Odoo con zero trust, retenciones ecuatorianas y UIs responsive mientras capacita a los usuarios de negocio."
+    },
+    experiences: {
+      en: [
+        "Odoo Developer (2023–2025): Zero Trust Access Management module, Ecuador withholding flows, and view validations.",
+        "Full Stack Developer (2021–2023): Responsive React apps, API integrations, and React Native apps published on GitHub."
+      ],
+      es: [
+        "Odoo Developer (2023–2025): módulo de Zero Trust Access Management, retenciones del SRI y validaciones de vistas.",
+        "Full Stack Developer (2021–2023): apps React responsive, integraciones API y apps React Native publicadas en GitHub."
+      ]
+    },
+    skills: ["Odoo 16", "Zero Trust access", "React Native"],
+    skillBars: [
+      { name: "Python / Odoo", level: 90 },
+      { name: "JavaScript (React, Node, React Native)", level: 85 },
+      { name: "PostgreSQL", level: 82 },
+      { name: "Git / GitHub", level: 88 },
+      { name: "HTML / CSS / Responsive", level: 84 },
+      { name: "User enablement & training", level: 87 }
+    ],
+    certifications: {
+      en: ["Full Stack Developer (JavaScript & React)", "Responsive Web Design"],
+      es: ["Full Stack Developer (JavaScript & React)", "Responsive Web Design"]
+    },
+    languages: {
+      en: ["Spanish (Native)", "English (B2 • Upper-intermediate)"],
+      es: ["Español (Nativo)", "Inglés (B2 • Intermedio alto)"]
+    },
+    linkedin: "https://linkedin.com/in/juan-salazar",
+    github: "https://github.com/juan-salazar",
+    avatar: "/api/placeholder/300/300"
+  },
+  {
     name: "Angelo Iván Alejandro Vera",
-    role: "Senior Full Stack Developer",
-    skills: ["Odoo", "Python", "JavaScript", "PostgreSQL", "Docker"],
-    experience: "enterprise solutions and ERP customization",
+    role: "Senior Odoo & Integration Lead",
+    years: 9,
+    focus: {
+      en: "Enterprise Odoo and GeneXus integrations with fluent English delivery",
+      es: "Integraciones enterprise Odoo y GeneXus con inglés fluido"
+    },
+    summary: {
+      en: "Leads manufacturing, finance, and logistics rollouts, hardening CI/CD and multilingual deployments.",
+      es: "Lidera despliegues de manufactura, finanzas y logística endureciendo CI/CD y entregas multilingües."
+    },
+    experiences: {
+      en: [
+        "Odoo Tech Lead (2016–2025): 9 years orchestrating manufacturing, finance, and logistics modules across LATAM.",
+        "Integration Specialist: Deep Java/GeneXus automations, API gateways, and CI/CD governance with fluent English client delivery."
+      ],
+      es: [
+        "Odoo Tech Lead (2016–2025): 9 años orquestando módulos de manufactura, finanzas y logística en LATAM.",
+        "Integration Specialist: automatizaciones Java/GeneXus, API gateways y gobierno CI/CD con entrega fluida en inglés."
+      ]
+    },
+    skills: ["Odoo architecture", "GeneXus", "CI/CD governance"],
+    skillBars: [
+      { name: "Python / Odoo", level: 96 },
+      { name: "Java / GeneXus", level: 92 },
+      { name: "JavaScript & Integrations", level: 88 },
+      { name: "PostgreSQL", level: 89 },
+      { name: "Git / DevOps", level: 90 },
+      { name: "Solution mentorship", level: 85 }
+    ],
+    certifications: {
+      en: ["GeneXus Advanced Developer", "Odoo Enterprise Specialist (internal)"],
+      es: ["GeneXus Advanced Developer", "Especialista Odoo Enterprise (interno)"]
+    },
+    languages: {
+      en: ["Spanish (Native)", "English (C1 • Fluent)"],
+      es: ["Español (Nativo)", "Inglés (C1 • Fluido)"]
+    },
     linkedin: "https://linkedin.com/in/angelo-vera",
     github: "https://github.com/angelo-vera",
     avatar: "/api/placeholder/300/300"
   },
   {
-    name: "Angelo Haro", 
-    role: "Salesforce Developer",
-    skills: ["Apex", "Lightning", "Salesforce", "SOQL", "Integration"],
-    experience: "Salesforce ecosystem and CRM solutions",
+    name: "Angelo Haro",
+    role: "Salesforce Integration Developer",
+    years: 3,
+    focus: {
+      en: "CRM automations bridging Salesforce and Odoo",
+      es: "Automatizaciones CRM que conectan Salesforce y Odoo"
+    },
+    summary: {
+      en: "Builds mid-market CRM flows, integrates APIs, and supports customer enablement with pragmatic documentation.",
+      es: "Construye flujos CRM mid-market, integra APIs y apoya la capacitación de clientes con documentación pragmática."
+    },
+    experiences: {
+      en: [
+        "Salesforce Developer (2022–present): Lightning components, Apex services, and SOQL automation.",
+        "Integration Analyst: Syncs Salesforce with Odoo inventory and billing signals for regional teams."
+      ],
+      es: [
+        "Salesforce Developer (2022–actualidad): componentes Lightning, servicios Apex y automatización SOQL.",
+        "Integration Analyst: sincroniza Salesforce con señales de inventario y facturación de Odoo para equipos regionales."
+      ]
+    },
+    skills: ["Salesforce", "API integrations", "Trailhead"],
+    skillBars: [
+      { name: "Salesforce (Apex & Flow)", level: 72 },
+      { name: "API Integration", level: 70 },
+      { name: "Odoo Connector", level: 65 },
+      { name: "JavaScript", level: 68 },
+      { name: "Documentation", level: 74 }
+    ],
+    certifications: {
+      en: ["Salesforce Trailhead Admin Journey"],
+      es: ["Salesforce Trailhead Admin Journey"]
+    },
+    languages: {
+      en: ["Spanish (Native)", "English (B1 • Conversational)"],
+      es: ["Español (Nativo)", "Inglés (B1 • Conversacional)"]
+    },
     linkedin: "https://linkedin.com/in/angelo-haro",
     github: "https://github.com/angelo-haro",
     avatar: "/api/placeholder/300/300"
   },
   {
     name: "Alex Fabricio Rosero",
-    role: "Frontend Developer", 
-    skills: ["React", "TypeScript", "Tailwind", "Next.js", "UI/UX"],
-    experience: "modern web applications and user interfaces",
+    role: "Frontend Developer",
+    years: 2,
+    focus: {
+      en: "Accessible front-ends with component libraries",
+      es: "Front-ends accesibles con librerías de componentes"
+    },
+    summary: {
+      en: "Delivers responsive layouts, Tailwind-based design systems, and QA support for product launches.",
+      es: "Entrega maquetas responsive, sistemas de diseño con Tailwind y soporte QA para lanzamientos de producto."
+    },
+    experiences: {
+      en: [
+        "Frontend Developer (2023–present): React + TypeScript dashboards and marketing sites.",
+        "UI Support: Implements reusable components and accessibility fixes for internal squads."
+      ],
+      es: [
+        "Frontend Developer (2023–actualidad): dashboards y sitios marketing con React + TypeScript.",
+        "UI Support: implementa componentes reutilizables y ajustes de accesibilidad para squads internos."
+      ]
+    },
+    skills: ["React", "TypeScript", "Tailwind"],
+    skillBars: [
+      { name: "React & TypeScript", level: 70 },
+      { name: "Tailwind / CSS", level: 72 },
+      { name: "Design Systems", level: 65 },
+      { name: "Testing & QA", level: 60 },
+      { name: "Accessibility", level: 58 }
+    ],
+    certifications: {
+      en: ["Internal UI Components Playbook"],
+      es: ["Playbook interno de componentes UI"]
+    },
+    languages: {
+      en: ["Spanish (Native)", "English (A2 • Basic)"],
+      es: ["Español (Nativo)", "Inglés (A2 • Básico)"]
+    },
     linkedin: "https://linkedin.com/in/alex-rosero",
     github: "https://github.com/alex-rosero",
-    avatar: "/api/placeholder/300/300"
-  },
-  {
-    name: "Juan Diego Salazar Vivas",
-    role: "Backend Developer",
-    skills: ["Node.js", "API Design", "Database", "Cloud", "DevOps"],
-    experience: "scalable backend systems and infrastructure",
-    linkedin: "https://linkedin.com/in/juan-salazar",
-    github: "https://github.com/juan-salazar",
     avatar: "/api/placeholder/300/300"
   }
 ]
@@ -269,6 +417,7 @@ function App(): React.JSX.Element {
     role: string
     cta: string
   }
+  const locale: LocaleKey = currentLanguage.startsWith('es') ? 'es' : 'en'
 
   const navItems = [
     { key: 'home', label: t('nav.home') },
@@ -748,23 +897,33 @@ function App(): React.JSX.Element {
                 viewport={{ once: true }}
               >
                 <Card className="h-full border border-[#e3d8c9] bg-white/85 backdrop-blur-sm shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
-                  <CardContent className="p-6 text-center">
-                    <div className="w-24 h-24 mx-auto mb-4 flex items-center justify-center rounded-full bg-[#f2ebe0] shadow-inner">
-                      <Users className="w-12 h-12 text-[#6c7a97]" />
+                  <CardContent className="p-6">
+                    <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-[#f2ebe0] shadow-inner">
+                      <Users className="w-10 h-10 text-[#6c7a97]" />
                     </div>
-                    <h3 className="text-lg font-semibold text-[#1f2a44] mb-2">
-                      {member.name}
-                    </h3>
-                    <p className="text-[#365d9c] font-medium mb-3">
-                      {member.role}
+                    <div className="text-center">
+                      <h3 className="text-lg font-semibold text-[#1f2a44] mb-1">
+                        {member.name}
+                      </h3>
+                      <p className="text-[#365d9c] font-medium">
+                        {member.role}
+                      </p>
+                      <p className="text-xs uppercase tracking-[0.2em] text-[#8891a6] mt-2">
+                        {locale === 'es' ? `${member.years}+ años de experiencia` : `${member.years}+ years of experience`}
+                      </p>
+                    </div>
+
+                    <p className="mt-4 text-sm text-[#365d9c] font-semibold text-center">
+                      {member.focus[locale]}
                     </p>
-                    <p className="text-sm text-[#4f5a76] mb-4">
-                      {t('about.experience', { years: '4', field: member.experience })}
+                    <p className="mt-2 text-sm text-[#4f5a76] text-center">
+                      {member.summary[locale]}
                     </p>
-                    <div className="flex flex-wrap gap-2 justify-center mb-4">
+
+                    <div className="flex flex-wrap gap-2 justify-center mt-4">
                       {member.skills.map((skill) => (
                         <Badge
-                          key={skill}
+                          key={`${member.name}-${skill}`}
                           variant="secondary"
                           className="text-xs border-0 bg-[#e9f0ff] text-[#1f2a44] shadow-sm"
                         >
@@ -772,6 +931,73 @@ function App(): React.JSX.Element {
                         </Badge>
                       ))}
                     </div>
+
+                    <Separator className="my-4" />
+
+                    <div className="space-y-3 text-left">
+                      <h4 className="text-sm font-semibold text-[#1f2a44] uppercase tracking-wide">
+                        {locale === 'es' ? 'Experiencia' : 'Experience'}
+                      </h4>
+                      <div className="space-y-2">
+                        {member.experiences[locale].map((item) => (
+                          <div key={`${member.name}-${item}`} className="flex items-start gap-2 text-xs text-[#4f5a76]">
+                            <Briefcase className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                            <span>{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mt-4 space-y-3 text-left">
+                      <h4 className="text-sm font-semibold text-[#1f2a44] uppercase tracking-wide">
+                        Skills
+                      </h4>
+                      <div className="space-y-3">
+                        {member.skillBars.map((skill) => (
+                          <div key={`${member.name}-${skill.name}`}>
+                            <div className="flex items-center justify-between text-[11px] text-[#4f5a76] mb-1">
+                              <span>{skill.name}</span>
+                              <span>{skill.level}%</span>
+                            </div>
+                            <Progress value={skill.level} className="bg-[#e9f0ff]" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <Separator className="my-4" />
+
+                    <div className="grid gap-4 text-left text-xs text-[#4f5a76]">
+                      <div>
+                        <h4 className="text-sm font-semibold text-[#1f2a44] uppercase tracking-wide mb-2">
+                          {locale === 'es' ? 'Certificados' : 'Certificates'}
+                        </h4>
+                        <div className="space-y-1">
+                          {member.certifications[locale].map((cert) => (
+                            <div key={`${member.name}-${cert}`} className="flex items-start gap-2">
+                              <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                              <span>{cert}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-semibold text-[#1f2a44] uppercase tracking-wide mb-2">
+                          {locale === 'es' ? 'Idiomas' : 'Languages'}
+                        </h4>
+                        <div className="space-y-1">
+                          {member.languages[locale].map((lang) => (
+                            <div key={`${member.name}-${lang}`} className="flex items-start gap-2">
+                              <Globe className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                              <span>{lang}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <Separator className="my-4" />
+
                     <div className="flex justify-center space-x-3">
                       <a
                         href={member.linkedin}

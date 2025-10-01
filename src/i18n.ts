@@ -82,19 +82,19 @@ const resources = {
         projects: {
           odooSuite: {
             title: "Odoo supply chain suite",
-            description: "Manufacturing ERP with automated MRP, quality, and logistics workflows.",
-            fullDescription: "We delivered a fully integrated Odoo ecosystem covering MRP, inventory, quality, and logistics for a LATAM manufacturer. In 5 weeks we automated planning, introduced quality checkpoints, and connected third-party logistics with a hardened CI/CD pipeline.",
-            client: "Industrial manufacturer • LATAM",
+            description: "Odoo 16 rollout for APY with payment governance, credit control, and logistics orchestration.",
+            fullDescription: "We modernised Antonio Pino Ycaza Cía. Ltda.'s Odoo 16 estate across payments, sales, credit control, and logistics. The programme delivered a self-consumption governance model, reinforced stock and approval flows, and introduced CI/CD instrumentation for safe releases.",
+            client: "Antonio Pino Ycaza Cía. Ltda. • Ecuador",
             features: [
-              "Advanced MRP rules and demand forecasting",
-              "Automated quality gates with digital traceability",
-              "Logistics orchestration with 3PL integrations",
-              "CI/CD pipeline for zero-downtime releases"
+              "Payment and self-consumption flow with confirmation traceability and custom schemas",
+              "Sales controls with credit blocks, stock validations, and SRI-compliant workflows",
+              "Warehouse and finance logistics orchestration with tiered approvals and cron jobs",
+              "Executive reporting and Advanced Access Control with cleaned manifests and dashboards"
             ],
             meta: {
-              stack: ["Odoo MRP", "PostgreSQL", "Docker", "GitHub Actions"],
+              stack: ["Odoo 16", "Python", "PostgreSQL", "XML", "JavaScript", "CSS", "Git"],
               duration: "5 weeks",
-              impact: "-35% annual maintenance spend"
+              impact: "Cash-sale delinquencies held under 3% and 35% fewer reconciliation incidents"
             }
           },
           integrationLayer: {
@@ -386,19 +386,19 @@ const resources = {
         projects: {
           odooSuite: {
             title: "Suite Odoo para cadena de suministro",
-            description: "ERP manufacturero con MRP automatizado, calidad y logística integrados.",
-            fullDescription: "Entregamos un ecosistema Odoo que cubre MRP, inventario, calidad y logística para un fabricante en LATAM. En 5 semanas automatizamos la planificación, sumamos checkpoints de calidad e integramos la logística externa con un pipeline CI/CD robusto.",
-            client: "Fabricante industrial • LATAM",
+            description: "Implementación Odoo 16 para APY con gobierno de pagos, crédito y logística integrada.",
+            fullDescription: "Modernizamos el ecosistema Odoo 16 de Antonio Pino Ycaza Cía. Ltda. cubriendo pagos, ventas, control de crédito y logística. Entregamos un modelo de autoconsumo gobernado, reforzamos validaciones de stock y aprobaciones, e instrumentamos CI/CD para despliegues seguros.",
+            client: "Antonio Pino Ycaza Cía. Ltda. • Ecuador",
             features: [
-              "Reglas MRP avanzadas y forecasting de demanda",
-              "Puertas de calidad automatizadas con trazabilidad digital",
-              "Orquestación logística con integraciones 3PL",
-              "Pipeline CI/CD para despliegues sin downtime"
+              "Flujo de pagos y autoconsumo con trazabilidad de confirmación y esquemas personalizados",
+              "Controles comerciales con bloqueos crediticios, validaciones de stock y cumplimiento SRI",
+              "Logística-finanzas orquestada con permisos de bodega, base_tier_validation y cron jobs",
+              "Reportes ejecutivos APY y Advanced Access Control con vistas depuradas y dashboards"
             ],
             meta: {
-              stack: ["Odoo MRP", "PostgreSQL", "Docker", "GitHub Actions"],
+              stack: ["Odoo 16", "Python", "PostgreSQL", "XML", "JavaScript", "CSS", "Git"],
               duration: "5 semanas",
-              impact: "-35% en costos de mantenimiento"
+              impact: "Impagos contado/crédito corto < 3% y -35% incidencias en conciliación"
             }
           },
           integrationLayer: {
